@@ -1,3 +1,6 @@
+#Técnica Herencia
+#Una clase hija reutiliza y amplía el comportamiento de una clase padre
+
 class Personaje:
     def __init__(self, nombre, vida):
         self.nombre = nombre
