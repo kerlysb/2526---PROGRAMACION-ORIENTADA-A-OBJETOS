@@ -1,5 +1,6 @@
 #Técnica de Polimorfismo
 #Distintas clases implementan el mismo método con comportamientos diferentes, pero se usan de forma uniforme.
+
 class Mago(Personaje):
     def __init__(self, nombre, vida, poder_magico):
         super().__init__(nombre, vida)
