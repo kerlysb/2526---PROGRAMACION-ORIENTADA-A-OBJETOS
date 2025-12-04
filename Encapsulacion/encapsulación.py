@@ -1,3 +1,5 @@
+# Técnica de encapsulación
+#Se protegen atributos usando la convención de subrayado y se accede mediante getters/setters
 class Persona:
     def __init__(self, nombre, edad):
         self._nombre = nombre      # "protegido"
