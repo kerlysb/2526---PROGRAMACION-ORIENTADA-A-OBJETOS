@@ -33,7 +33,7 @@ def turno_de_ataque(atacante, defensor):
     atacante.atacar(defensor)
 
 # Uso polimórfico
-guerrero = Guerrero("Guts", 100, 18)
+guerrero = Guerrero("Dani", 100, 18)
 mago = Mago("Kerly", 80, 25)
 ogro = Personaje("Ogro", 120)
 
