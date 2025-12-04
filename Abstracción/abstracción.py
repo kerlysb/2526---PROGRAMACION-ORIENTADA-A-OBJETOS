@@ -1,3 +1,4 @@
+# Tecnica Abstraccion
 class CuentaBancaria:
     def __init__(self, titular, saldo_inicial):
         self.titular = titular
