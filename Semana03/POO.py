@@ -9,3 +9,7 @@ class SemanaClima:
             """Muestra temperaturas por día"""
             for i, dia in enumerate(self.dias):
                 print(f"{dia}: {self.__temperaturas[i]:.1f}°C")
+
+                def calcular_promedio(self):
+                    """Calcula promedio semanal"""
+                    return sum(self.__temperaturas) / len(self.__temperaturas)
