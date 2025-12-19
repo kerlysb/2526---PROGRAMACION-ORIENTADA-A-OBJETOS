@@ -5,3 +5,11 @@ class Evento:
         self.fecha = fecha
         self.capacidad_maxima = capacidad_maxima
         self.asistentes = []  # Lista de objetos Asistente
+
+    def agregar_asistente(self, asistente):
+        """Método para registrar asistentes, controlando capacidad"""
+        if len(self.asistentes) < self.capacidad_maxima:
+            self.asistentes.append(asistente)
+            print(f"Asistente {asistente.nombre} registrado en {self.nombre}")
+        else:
+            print(f"Evento {self.nombre} está lleno")
