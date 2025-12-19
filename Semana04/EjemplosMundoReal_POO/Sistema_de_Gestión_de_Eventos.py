@@ -13,3 +13,7 @@ class Evento:
             print(f"Asistente {asistente.nombre} registrado en {self.nombre}")
         else:
             print(f"Evento {self.nombre} está lleno")
+
+    def capacidad_actual(self):
+        """Método para consultar ocupación"""
+        return len(self.asistentes)
