@@ -47,7 +47,7 @@ class Conferencia(Evento):
 
     def descripcion(self):
         """Sobrescribe método padre - POLIMORFISMO"""
-        return f"🎤 Conferencia: {self.nombre} ({self.tema}) - {super().descripcion()}"
+        return f" Conferencia: {self.nombre} ({self.tema}) - {super().descripcion()}"
 
 
 # Uso e interacción de objetos
