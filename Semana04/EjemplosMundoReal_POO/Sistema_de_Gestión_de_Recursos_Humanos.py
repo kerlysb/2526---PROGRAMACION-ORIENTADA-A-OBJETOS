@@ -42,3 +42,17 @@ class Gerente(Empleado):
         """Polimorfismo: salario con bono por equipo"""
         bono_equipo = len(self.equipo) * 150
         return self._salario_base + bono_equipo
+
+# Uso demostrando interacción de objetos
+if __name__ == "__main__":
+    # Crear objetos e interactuar
+    dev_python = Desarrollador("Kerly Suárez", "DEV001", "POO")
+    gerente = Gerente("Carlos Ruiz", "GER001", 5)
+
+    gerente.agregar_empleado_equipo(dev_python)
+
+    print(dev_python.descripcion())
+    print(f"Salario dev: ${dev_python.calcular_salario()}")
+
+    print(gerente.descripcion())
+    print(f"Salario gerente: ${gerente.calcular_salario()}")
