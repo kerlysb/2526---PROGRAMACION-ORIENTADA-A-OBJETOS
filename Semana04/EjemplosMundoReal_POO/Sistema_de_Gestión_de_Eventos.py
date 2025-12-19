@@ -36,3 +36,14 @@ class Evento:
         def enviar_confirmacion(self):
             """Método de interacción entre objetos"""
             return f"Confirmación enviada a {self._email}"
+
+
+# Subclase que hereda de Evento - polimorfismo en descripcion()
+class Conferencia(Evento):
+    def __init__(self, nombre, fecha, capacidad_maxima, tema):
+        super().__init__(nombre, fecha, capacidad_maxima)
+        self.tema = tema
+
+    def descripcion(self):
+        """Sobrescribe método padre - polimorfismo"""
+        return f"Conferencia: {self.nombre} ({self.tema}) - {super().descripcion()}"
