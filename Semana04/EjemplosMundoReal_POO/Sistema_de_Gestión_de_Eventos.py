@@ -17,3 +17,7 @@ class Evento:
     def capacidad_actual(self):
         """Método para consultar ocupación"""
         return len(self.asistentes)
+
+    def descripcion(self):
+        """Método abstracto - polimorfismo (se sobrescribe en subclases)"""
+        return f"Evento: {self.nombre} - Fecha: {self.fecha}"
