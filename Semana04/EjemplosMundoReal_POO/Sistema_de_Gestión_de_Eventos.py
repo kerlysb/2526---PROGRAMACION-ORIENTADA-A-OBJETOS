@@ -21,3 +21,9 @@ class Evento:
     def descripcion(self):
         """Método abstracto - polimorfismo (se sobrescribe en subclases)"""
         return f"Evento: {self.nombre} - Fecha: {self.fecha}"
+
+    # Clase para asistentes - encapsulación de datos personales
+    class Asistente:
+        def __init__(self, nombre, email):
+            self._nombre = nombre  # Encapsulación con _ (convención privada)
+            self._email = email
