@@ -27,3 +27,8 @@ class Evento:
         def __init__(self, nombre, email):
             self._nombre = nombre  # Encapsulación con _ (convención privada)
             self._email = email
+
+        @property
+        def nombre(self):
+            """Getter para nombre - acceso controlado"""
+            return self._nombre
