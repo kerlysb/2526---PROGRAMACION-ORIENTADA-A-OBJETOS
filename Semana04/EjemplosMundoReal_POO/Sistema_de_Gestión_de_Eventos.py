@@ -32,3 +32,7 @@ class Evento:
         def nombre(self):
             """Getter para nombre - acceso controlado"""
             return self._nombre
+
+        def enviar_confirmacion(self):
+            """Método de interacción entre objetos"""
+            return f"Confirmación enviada a {self._email}"
