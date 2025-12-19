@@ -57,7 +57,7 @@ if __name__ == "__main__":
     # Crear objetos
     conf_python = Conferencia("Poo Vs Programación Tradicional", "2025-12-20", 50, "OOP")
     asist1 = Asistente("Kerly Suárez", "kerly_sb@gmail.com")
-    asist2 = Asistente("Arturo Acosta", "arturo@gmail.com")
+    asist2 = Asistente("Ronny Acosta", "ronac@gmail.com")
 
     # Interacción entre objetos
     conf_python.agregar_asistente(asist1)
