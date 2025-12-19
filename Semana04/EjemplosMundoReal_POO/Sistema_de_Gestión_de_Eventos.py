@@ -1,6 +1,4 @@
-# Sistema de Gestión de Eventos - VERSIÓN CORREGIDA
-
-# 1. PRIMERO: Clase para asistentes (encapsulación)
+# Clase base para todos los eventos - demuestra encapsulación
 class Asistente:
     def __init__(self, nombre, email):
         self._nombre = nombre  # Convención privada
@@ -16,7 +14,7 @@ class Asistente:
         return f"Confirmación enviada a {self._email}"
 
 
-# 2. SEGUNDO: Clase base para eventos (herencia y abstracción)
+# Clase base para eventos (herencia y abstracción)
 class Evento:
     def __init__(self, nombre, fecha, capacidad_maxima):
         self.nombre = nombre
@@ -41,7 +39,7 @@ class Evento:
         return f"Evento: {self.nombre} - Fecha: {self.fecha}"
 
 
-# 3. TERCERO: Subclase con polimorfismo
+# Subclase con polimorfismo
 class Conferencia(Evento):
     def __init__(self, nombre, fecha, capacidad_maxima, tema):
         super().__init__(nombre, fecha, capacidad_maxima)
@@ -52,14 +50,14 @@ class Conferencia(Evento):
         return f"🎤 Conferencia: {self.nombre} ({self.tema}) - {super().descripcion()}"
 
 
-# 4. ÚLTIMO: Bloque principal (DESPUÉS de todas las clases)
+# Uso e interacción de objetos
 if __name__ == "__main__":
     print("=== SISTEMA DE GESTIÓN DE EVENTOS ===\n")
 
-    # Crear objetos (AHORA las clases existen)
+    # Crear objetos
     conf_python = Conferencia("Poo Vs Programación Tradicional", "2025-12-20", 50, "OOP")
     asist1 = Asistente("Kerly Suárez", "kerly_sb@gmail.com")
-    asist2 = Asistente("Arturo Acosta", "maria@gmail.com")
+    asist2 = Asistente("Arturo Acosta", "arturo@gmail.com")
 
     # Interacción entre objetos
     conf_python.agregar_asistente(asist1)
@@ -68,3 +66,4 @@ if __name__ == "__main__":
     print("\n" + conf_python.descripcion())  # Polimorfismo en acción
     print(f" Capacidad: {conf_python.capacidad_actual()}/{conf_python.capacidad_maxima}")
     print(asist1.enviar_confirmacion())
+    print(asist2.enviar_confirmacion())
