@@ -30,4 +30,15 @@ nombre_figura = "rectángulo principal"  # str
 calcular_area_automatico = True  # bool
 
 
+# Ejecución principal
+print(f"Figura: {nombre_figura}")
+print(f"Largo: {largo_rectangulo}m (int)")
+print(f"Ancho: {ancho_rectangulo}m (float)")
 
+if calcular_area_automatico:
+    # Llamada a función con conversión implícita int a float
+    resultado = calcular_area(largo_rectangulo, ancho_rectangulo)
+    print(f"Área calculada: {resultado} m² (float)")
+    print("Cálculo completado exitosamente (bool: True)")
+else:
+    print("Cálculo manual requerido.")
