@@ -23,4 +23,11 @@ def calcular_area(largo: float, ancho: float) -> float:
     area_rectangulo = largo * ancho
     return area_rectangulo
 
+# Datos de entrada (tipos mixtos)
+largo_rectangulo = 10  # int
+ancho_rectangulo = 5.5  # float
+nombre_figura = "rectángulo principal"  # str
+calcular_area_automatico = True  # bool
+
+
 
