@@ -19,3 +19,8 @@ def calcular_area(largo: float, ancho: float) -> float:
         print("Error: Las dimensiones deben ser positivas.")
         return 0.0
 
+   # Cálculo del área (float)
+    area_rectangulo = largo * ancho
+    return area_rectangulo
+
+
