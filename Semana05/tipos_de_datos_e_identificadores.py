@@ -13,3 +13,9 @@ def calcular_area(largo: float, ancho: float) -> float:
     Returns:
         float: Área calculada.
     """
+# Validación booleana para dimensiones positivas
+    dimensiones_validas = largo > 0 and ancho > 0
+    if not dimensiones_validas:
+        print("Error: Las dimensiones deben ser positivas.")
+        return 0.0
+
