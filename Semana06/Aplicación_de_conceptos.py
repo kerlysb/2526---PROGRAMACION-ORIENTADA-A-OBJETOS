@@ -34,3 +34,16 @@ class Personaje:
         """Método base para polimorfismo (será sobrescrito)."""
         print(f"{self.get_nombre()} ataca con fuerza básica (10 dmg).")
 
+class Guerrero(Personaje):
+    """
+    Clase derivada: hereda de Personaje.
+    Demuestra herencia y polimorfismo (sobrescribe atacar).
+    """
+    def __init__(self, nombre, vida):
+        super().__init__(nombre, vida)
+        self.__fuerza = 20  # Encapsulación adicional
+
+    def atacar(self):
+        """Polimorfismo: sobrescribe método de clase base."""
+        print(f"{self.get_nombre()} (Guerrero) ataca con espada (20 dmg)!")
+
