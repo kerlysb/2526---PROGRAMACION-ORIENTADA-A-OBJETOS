@@ -47,3 +47,15 @@ class Guerrero(Personaje):
         """Polimorfismo: sobrescribe método de clase base."""
         print(f"{self.get_nombre()} (Guerrero) ataca con espada (20 dmg)!")
 
+class Mago(Personaje):
+    """
+    Clase derivada: herencia y polimorfismo.
+    """
+    def __init__(self, nombre, vida):
+        super().__init__(nombre, vida)
+        self.__magia = 15
+
+    def atacar(self):
+        """Polimorfismo: implementación diferente."""
+        print(f"{self.get_nombre()} (Mago) lanza bola de fuego (15 dmg)!")
+
