@@ -59,3 +59,33 @@ class Mago(Personaje):
         """Polimorfismo: implementación diferente."""
         print(f"{self.get_nombre()} (Mago) lanza bola de fuego (15 dmg)!")
 
+# Demostración: instancias y métodos
+if __name__ == "__main__":
+    # Instancias de clases base y derivadas
+    personaje_base = Personaje("Soldado", 100)
+    guerrero = Guerrero("Guts", 150)
+    mago = Mago("Gandalf", 80)
+
+    # Demostración de encapsulación: getters y setters
+    print("=== Demostración de Encapsulación ===")
+    personaje_base.mostrar_info()
+    personaje_base.set_vida(90)
+    print(f"Vida actualizada: {personaje_base.get_vida()}")
+
+    print("\n=== Demostración de Herencia y Polimorfismo ===")
+    # Herencia: clases derivadas usan método heredado
+    guerrero.mostrar_info()
+    mago.mostrar_info()
+
+    # Polimorfismo: mismo método, comportamiento diferente
+    print("\nAtaques:")
+    personaje_base.atacar()  # Versión base
+    guerrero.atacar()        # Sobrescrita
+    mago.atacar()            # Sobrescrita
+
+    # Lista polimórfica: funciona con cualquier subclase
+    personajes = [personaje_base, guerrero, mago]
+    for p in personajes:
+        p.mostrar_info()
+        p.atacar()
+        print("---")
