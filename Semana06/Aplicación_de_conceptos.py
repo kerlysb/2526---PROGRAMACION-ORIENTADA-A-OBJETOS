@@ -63,8 +63,8 @@ class Mago(Personaje):
 if __name__ == "__main__":
     # Instancias de clases base y derivadas
     personaje_base = Personaje("Soldado", 100)
-    guerrero = Guerrero("Guts", 150)
-    mago = Mago("Gandalf", 80)
+    guerrero = Guerrero("Danny", 150)
+    mago = Mago("Merlín", 80)
 
     # Demostración de encapsulación: getters y setters
     print("=== Demostración de Encapsulación ===")
