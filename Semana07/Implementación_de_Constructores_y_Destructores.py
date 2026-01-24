@@ -70,4 +70,22 @@ class ConexionDB:
         self.conectado = False
         print(f"Conexión a {self.host} cerrada correctamente.")
 
+# Demostración del uso
+if __name__ == "__main__":
+    # Crear objetos: llama a __init__
+    archivo = GestorArchivo("temp_datos")
+    archivo.escribir(b"Datos de prueba\n")
+
+    db = ConexionDB("localhost:5432")
+    print(db.consultar())
+
+    # Eliminar explícitamente: llama a __del__
+    del archivo
+    del db
+
+    # El siguiente objeto se destruye al final del script (automático)
+    temp = GestorArchivo("auto_temp")
+
+    print("Programa ejecutado sin errores.")  # Confirmación final
+
 
