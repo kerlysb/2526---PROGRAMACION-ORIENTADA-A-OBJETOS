@@ -43,4 +43,31 @@ class GestorArchivo:
         except Exception as e:
             print(f"Error en limpieza: {e}")
 
+class ConexionDB:
+    """
+    Clase que simula una conexión a base de datos con limpieza.
+    """
+
+    def __init__(self, host):
+        """
+        Constructor: Inicializa la 'conexión' con el host proporcionado.
+        """
+        self.host = host
+        self.conectado = True
+        print(f"Conexión a {self.host} establecida.")
+
+    def consultar(self):
+        """Método auxiliar para simular una consulta."""
+        if self.conectado:
+            return "Datos consultados"
+        return None
+
+    def __del__(self):
+        """
+        Destructor: Cierra la conexión simulada.
+        Se llama en las mismas condiciones que en GestorArchivo.
+        """
+        self.conectado = False
+        print(f"Conexión a {self.host} cerrada correctamente.")
+
 
