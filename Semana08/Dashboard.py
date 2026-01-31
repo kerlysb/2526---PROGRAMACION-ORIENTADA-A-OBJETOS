@@ -3,10 +3,11 @@ import subprocess
 import sys
 
 def mostrar_codigo(ruta_script):
-    # Asegúrate de que la ruta al script es absoluta
+    # Muestra el código fuente de un script Python.
+    # Adaptación: Ruta absoluta mejorada para Windows y PyCharm.
     ruta_script_absoluta = os.path.abspath(ruta_script)
     try:
-        with open(ruta_script_absoluta, 'r') as archivo:
+        with open(ruta_script_absoluta, 'r', encoding='utf-8') as archivo:
             codigo = archivo.read()
             print(f"\n--- Código de {ruta_script} ---\n")
             print(codigo)
