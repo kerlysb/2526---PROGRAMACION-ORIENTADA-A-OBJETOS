@@ -9,7 +9,7 @@ def mostrar_codigo(ruta_script):
     try:
         with open(ruta_script_absoluta, 'r', encoding='utf-8') as archivo:
             codigo = archivo.read()
-            print(f"\n--- Código de {ruta_script} ---\n")
+            print(f"\n--- Código de {os.path.basename(ruta_script)} ---")
             print(codigo)
             return codigo
     except FileNotFoundError:
