@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 
 def mostrar_codigo(ruta_script):
     # Asegúrate de que la ruta al script es absoluta
