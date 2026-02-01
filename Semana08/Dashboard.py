@@ -13,7 +13,10 @@ def mostrar_codigo(ruta_script):
             print(codigo)
             return codigo
     except FileNotFoundError:
-        print("El archivo no se encontró.")
+        print(f"El archivo '{ruta_script}' no se encontró.")
+        return None
+    except UnicodeDecodeError:
+        print("Error: El archivo no es UTF-8. Intenta con otro encoding.")
         return None
     except Exception as e:
         print(f"Ocurrió un error al leer el archivo: {e}")
