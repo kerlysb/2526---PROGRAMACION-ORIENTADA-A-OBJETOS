@@ -47,6 +47,7 @@ def mostrar_menu():
     ruta_base = os.path.dirname(__file__)
 
     unidades = {
+        '0': 'OOP Proyectos',  # Nueva unidad para asignaciones POO
         '1': 'Unidad 1',
         '2': 'Unidad 2'
     }
