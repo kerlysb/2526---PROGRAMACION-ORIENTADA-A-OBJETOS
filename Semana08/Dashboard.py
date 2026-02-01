@@ -23,13 +23,24 @@ def mostrar_codigo(ruta_script):
         return None
 
 def ejecutar_codigo(ruta_script):
+    """
+        Ejecuta un script Python.
+        Adaptación para Windows (usuario en Win11): Usa subprocess.run sin ventana nueva para ejecución en foreground.
+        Opcional: 'pythonw' para background. Agregado manejo de errores y confirmación.
+        """
     try:
-        if os.name == 'nt':  # Windows
-            subprocess.Popen(['cmd', '/k', 'python', ruta_script])
-        else:  # Unix-based systems
-            subprocess.Popen(['xterm', '-hold', '-e', 'python3', ruta_script])
+        python_exe = sys.executable
+        # Para ejecución visible (foreground, output en consola actual):
+        resultado = subprocess.run([python_exe, ruta_script], check=True, text=True, capture_output=False)
+        print("Script ejecutado exitosamente.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error en ejecución: {e.stderr}")
+    except FileNotFoundError:
+        print("Python no encontrado. Verifica tu entorno PyCharm.")
     except Exception as e:
-        print(f"Ocurrió un error al ejecutar el código: {e}")
+        print(f"Error al ejecutar el código: {e}")
+        # Alternativa background (sin ventana): subprocess.Popen([python_exe.replace('python', 'pythonw'), ruta_script])
+
 
 def mostrar_menu():
     # Define la ruta base donde se encuentra el dashboard.py
