@@ -86,27 +86,25 @@ def mostrar_menu():
             print("Opción inválida. Por favor, intenta nuevamente.")
 
 def mostrar_sub_menu(ruta_unidad):
-    sub_carpetas = [f.name for f in os.scandir(ruta_unidad) if f.is_dir()]
-
+    """Submenú de subcarpetas. Interfaz mejorada con conteo de scripts."""
     while True:
-        print("\nSubmenú - Selecciona una subcarpeta")
-        # Imprime las subcarpetas
-        for i, carpeta in enumerate(sub_carpetas, start=1):
-            print(f"{i} - {carpeta}")
-        print("0 - Regresar al menú principal")
+        sub_carpetas = [f.name for f in os.scandir(ruta_unidad) if f.is_dir()]
+        print(f"\nSubmenú - {os.path.basename(ruta_unidad)} ({len(sub_carpetas)} subcarpetas)")
+        for i, carpeta in enumerate(sub_carpetas, 1):
+            ruta_carp = os.path.join(ruta_unidad, carpeta)
+            scripts = len([f.name for f in os.scandir(ruta_carp) if f.is_file() and f.name.endswith('.py')])
+            print(f"{i} - {carpeta} ({scripts} scripts .py)")
+        print("0 - Atrás")
 
-        eleccion_carpeta = input("Elige una subcarpeta o '0' para regresar: ")
-        if eleccion_carpeta == '0':
+        eleccion = input("Elige: ").strip()
+        if eleccion == '0':
             break
-        else:
-            try:
-                eleccion_carpeta = int(eleccion_carpeta) - 1
-                if 0 <= eleccion_carpeta < len(sub_carpetas):
-                    mostrar_scripts(os.path.join(ruta_unidad, sub_carpetas[eleccion_carpeta]))
-                else:
-                    print("Opción no válida. Por favor, intenta de nuevo.")
-            except ValueError:
-                print("Opción no válida. Por favor, intenta de nuevo.")
+        try:
+            idx = int(eleccion) - 1
+            if 0 <= idx < len(sub_carpetas):
+                mostrar_scripts(os.path.join(ruta_unidad, sub_carpetas[idx]))
+        except:
+            print("Entrada inválida. Por favor, intenta nuevamente.")
 
 def mostrar_scripts(ruta_sub_carpeta):
     scripts = [f.name for f in os.scandir(ruta_sub_carpeta) if f.is_file() and f.name.endswith('.py')]
