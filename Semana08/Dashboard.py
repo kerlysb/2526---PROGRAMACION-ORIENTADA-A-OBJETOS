@@ -107,40 +107,35 @@ def mostrar_sub_menu(ruta_unidad):
             print("Entrada inválida. Por favor, intenta nuevamente.")
 
 def mostrar_scripts(ruta_sub_carpeta):
-    scripts = [f.name for f in os.scandir(ruta_sub_carpeta) if f.is_file() and f.name.endswith('.py')]
-
+    """Lista y maneja scripts. Nueva opción 'E' para editar (abre en editor default)."""
     while True:
-        print("\nScripts - Selecciona un script para ver y ejecutar")
-        # Imprime los scripts
-        for i, script in enumerate(scripts, start=1):
+        scripts = [f.name for f in os.scandir(ruta_sub_carpeta) if f.is_file() and f.name.endswith('.py')]
+        print(f"\nScripts en {os.path.basename(ruta_sub_carpeta)} ({len(scripts)})")
+        for i, script in enumerate(scripts, 1):
             print(f"{i} - {script}")
-        print("0 - Regresar al submenú anterior")
-        print("9 - Regresar al menú principal")
+        print("0 - Atrás | 9 - Menú Principal | E - Editar en PyCharm/Editor")
 
-        eleccion_script = input("Elige un script, '0' para regresar o '9' para ir al menú principal: ")
-        if eleccion_script == '0':
+        eleccion = input("Elige: ").strip().upper()
+        if eleccion == '0':
             break
-        elif eleccion_script == '9':
-            return  # Regresar al menú principal
-        else:
-            try:
-                eleccion_script = int(eleccion_script) - 1
-                if 0 <= eleccion_script < len(scripts):
-                    ruta_script = os.path.join(ruta_sub_carpeta, scripts[eleccion_script])
-                    codigo = mostrar_codigo(ruta_script)
-                    if codigo:
-                        ejecutar = input("¿Desea ejecutar el script? (1: Sí, 0: No): ")
-                        if ejecutar == '1':
-                            ejecutar_codigo(ruta_script)
-                        elif ejecutar == '0':
-                            print("No se ejecutó el script.")
-                        else:
-                            print("Opción no válida. Regresando al menú de scripts.")
-                        input("\nPresiona Enter para volver al menú de scripts.")
-                else:
-                    print("Opción no válida. Por favor, intenta de nuevo.")
-            except ValueError:
-                print("Opción no válida. Por favor, intenta de nuevo.")
+        elif eleccion == '9':
+            return
+        elif eleccion == 'E':
+            # Abre carpeta en explorer (Windows)
+            os.startfile(os.path.dirname(ruta_sub_carpeta))
+            continue
+        try:
+            idx = int(eleccion) - 1
+            if 0 <= idx < len(scripts):
+                ruta_script = os.path.join(ruta_sub_carpeta, scripts[idx])
+                codigo = mostrar_codigo(ruta_script)
+                if codigo:
+                    ejecutar = input("\n¿Ejecutar? (S/N): ").strip().upper()
+                    if ejecutar == 'S':
+                        ejecutar_codigo(ruta_script)
+                    input("\nPresiona Enter para continuar...")
+        except:
+            print("Entrada inválida. Por favor, intenta nuevamente")
 
 # Ejecutar el dashboard
 if __name__ == "__main__":
