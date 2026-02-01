@@ -53,20 +53,37 @@ def mostrar_menu():
     }
 
     while True:
-        print("\nMenu Principal - Dashboard")
-        # Imprime las opciones del menú principal
+        print("\n" + "=" * 50)
+        print("Dashboard - Gestión de Proyectos Python (POO & Más)")
+        print("=" * 50)
         for key in unidades:
-            print(f"{key} - {unidades[key]}")
+            ruta_unidad = os.path.join(ruta_base, unidades[key])
+            if os.path.exists(ruta_unidad):
+                print(
+                    f"{key} - {unidades[key]} ({len([f for f in os.listdir(ruta_unidad) if f.is_dir()])} subcarpetas)")
+            else:
+                print(f"{key} - {unidades[key]} (No encontrada - Crea la carpeta)")
+        print("G - Git Status (en ruta base)")
         print("0 - Salir")
 
-        eleccion_unidad = input("Elige una unidad o '0' para salir: ")
-        if eleccion_unidad == '0':
-            print("Saliendo del programa.")
+        eleccion = input("\nElige opción: ").strip().upper()
+        if eleccion == '0':
+            print("¡Hasta luego! Usa Git para versionar cambios.")
             break
-        elif eleccion_unidad in unidades:
-            mostrar_sub_menu(os.path.join(ruta_base, unidades[eleccion_unidad]))
+        elif eleccion == 'G':
+            try:
+                resultado = subprocess.run(['git', 'status'], cwd=ruta_base, check=True, text=True, capture_output=True)
+                print(resultado.stdout)
+            except:
+                print("Git no disponible o no es repo. Inicializa con 'git init'.")
+        elif eleccion in unidades:
+            ruta_unidad = os.path.join(ruta_base, unidades[eleccion])
+            if os.path.exists(ruta_unidad):
+                mostrar_sub_menu(ruta_unidad)
+            else:
+                print(f"Crea la carpeta '{unidades[eleccion]}' en {ruta_base}")
         else:
-            print("Opción no válida. Por favor, intenta de nuevo.")
+            print("Opción inválida. Por favor, intenta nuevamente.")
 
 def mostrar_sub_menu(ruta_unidad):
     sub_carpetas = [f.name for f in os.scandir(ruta_unidad) if f.is_dir()]
