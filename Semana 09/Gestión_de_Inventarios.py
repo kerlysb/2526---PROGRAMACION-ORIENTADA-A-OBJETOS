@@ -55,4 +55,23 @@ class Inventario:
                 return True
         print("Producto no encontrado.")
         return False
+    def actualizar_producto(self, id_producto):
+        for prod in self.productos:
+            if prod.get_id() == id_producto:
+                print(f"Producto actual: {prod.to_string()}")
+                opcion = input("¿Qué deseas actualizar? (1: Cantidad, 2: Precio): ")
+
+                if opcion == "1":
+                    nueva_cantidad = int(input("Nueva cantidad: "))
+                    prod.set_cantidad(nueva_cantidad)
+                    print("Cantidad actualizada.")
+                elif opcion == "2":
+                    nuevo_precio = float(input("Nuevo precio: "))
+                    prod.set_precio(nuevo_precio)
+                    print("Precio actualizado.")
+                else:
+                    print("Opción inválida.")
+                return True
+        print("Producto no encontrado.")
+        return False
 
