@@ -47,3 +47,12 @@ class Inventario:
         print("Producto agregado exitosamente.")
         return True
 
+    def eliminar_producto(self, id_producto):
+        for i, prod in enumerate(self.productos):
+            if prod.get_id() == id_producto:
+                eliminado = self.productos.pop(i)
+                print(f"Producto eliminado: {eliminado.to_string()}")
+                return True
+        print("Producto no encontrado.")
+        return False
+
