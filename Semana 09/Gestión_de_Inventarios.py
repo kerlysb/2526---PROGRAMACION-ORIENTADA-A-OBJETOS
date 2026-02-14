@@ -30,3 +30,20 @@ class Producto:
 
     def to_string(self):
         return f"ID: {self._id}, Nombre: {self._nombre}, Cantidad: {self._cantidad}, Precio: ${self._precio:.2f}"
+
+
+class Inventario:
+    def __init__(self):
+        self.productos = []
+
+    def agregar_producto(self, producto):
+        # Verificar si ya existe un producto con el mismo ID
+        for prod in self.productos:
+            if prod.get_id() == producto.get_id():
+                print("Error: Ya existe un producto con ese ID.")
+                return False
+
+        self.productos.append(producto)
+        print("Producto agregado exitosamente.")
+        return True
+
