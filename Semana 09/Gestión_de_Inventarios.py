@@ -97,5 +97,17 @@ class Inventario:
         for prod in self.productos:
             print(prod.to_string())
         print("=" * 50)
+def mostrar_menu():
+    print("\n=== SISTEMA DE GESTIÓN DE INVENTARIOS ===")
+    print("1. Añadir nuevo producto")
+    print("2. Eliminar producto por ID")
+    print("3. Actualizar producto por ID")
+    print("4. Buscar productos por nombre")
+    print("5. Mostrar todos los productos")
+    print("6. Salir")
+    print("-" * 40)
+
+
+
 
 
