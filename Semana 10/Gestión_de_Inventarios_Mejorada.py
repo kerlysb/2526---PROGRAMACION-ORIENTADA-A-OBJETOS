@@ -166,5 +166,63 @@ class Inventario:
         for prod in self.productos:
             print(prod.to_string())
         print("=" * 50)
+def mostrar_menu():
+    print("\n=== SISTEMA DE GESTIÓN DE INVENTARIOS MEJORADO ===")
+    print("1. Añadir nuevo producto")
+    print("2. Eliminar producto por ID")
+    print("3. Actualizar producto por ID")
+    print("4. Buscar productos por nombre")
+    print("5. Mostrar todos los productos")
+    print("6. Salir")
+    print("-" * 50)
+
+
+def main():
+    inventario = Inventario()
+
+    while True:
+        mostrar_menu()
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == "1":
+            try:
+                id_prod = input("ID del producto: ")
+                nombre = input("Nombre del producto: ")
+                cantidad = int(input("Cantidad: "))
+                precio = float(input("Precio: "))
+
+                producto = Producto(id_prod, nombre, cantidad, precio)
+                inventario.agregar_producto(producto)
+            except ValueError:
+                print("Error: Los valores de cantidad y precio deben ser numéricos.")
+
+        elif opcion == "2":
+            id_buscar = input("ID del producto a eliminar: ")
+            inventario.eliminar_producto(id_buscar)
+
+        elif opcion == "3":
+            id_buscar = input("ID del producto a actualizar: ")
+            inventario.actualizar_producto(id_buscar)
+
+        elif opcion == "4":
+            nombre_buscar = input("Nombre a buscar: ")
+            inventario.buscar_por_nombre(nombre_buscar)
+
+        elif opcion == "5":
+            inventario.mostrar_todos()
+
+        elif opcion == "6":
+            print("¡Gracias por usar el sistema de inventarios!")
+            break
+
+        else:
+            print("Opción inválida. Intente nuevamente.")
+
+
+if __name__ == "__main__":
+    main()
+
+
+
 
 
