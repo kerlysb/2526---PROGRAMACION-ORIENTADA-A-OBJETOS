@@ -47,5 +47,43 @@ class Producto:
         except (ValueError, IndexError) as e:
             print(f"Error al leer línea del archivo: {line.strip()} - {e}")
             return None
+class Inventario:
+    def __init__(self, archivo='inventario.txt'):
+        self.productos = []
+        self.archivo = archivo
+        self.cargar_inventario()
 
+    def guardar_inventario(self):
+        """Guardar todos los productos en el archivo"""
+        try:
+            with open(self.archivo, 'w', encoding='utf-8') as f:
+                for producto in self.productos:
+                    f.write(producto.to_file_line() + '\n')
+            return True
+        except PermissionError:
+            print(f"Error: No hay permisos para escribir en {self.archivo}")
+            return False
+        except Exception as e:
+            print(f"Error al guardar inventario: {e}")
+            return False
+
+    def cargar_inventario(self):
+        """Cargar productos desde el archivo"""
+        try:
+            with open(self.archivo, 'r', encoding='utf-8') as f:
+                for line_num, linea in enumerate(f, 1):
+                    producto = Producto.from_file_line(linea)
+                    if producto:
+                        self.productos.append(producto)
+            print(f"Inventario cargado exitosamente ({len(self.productos)} productos)")
+            return True
+        except FileNotFoundError:
+            print(f"Archivo {self.archivo} no encontrado. Se creará uno nuevo.")
+            return True  # No hay error, simplemente no existe
+        except PermissionError:
+            print(f"Error: No hay permisos para leer {self.archivo}")
+            return False
+        except Exception as e:
+            print(f"Error al cargar inventario: {e}")
+            return False
 
