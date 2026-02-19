@@ -86,4 +86,85 @@ class Inventario:
         except Exception as e:
             print(f"Error al cargar inventario: {e}")
             return False
+ def agregar_producto(self, producto):
+        # Verificar si ya existe un producto con el mismo ID
+        for prod in self.productos:
+            if prod.get_id() == producto.get_id():
+                print("Error: Ya existe un producto con ese ID.")
+                return False
+
+        self.productos.append(producto)
+        if self.guardar_inventario():
+            print("Producto agregado y guardado exitosamente en el archivo.")
+        else:
+            print("Producto agregado en memoria, pero fallo al guardar en archivo.")
+        return True
+
+    def eliminar_producto(self, id_producto):
+        for i, prod in enumerate(self.productos):
+            if prod.get_id() == id_producto:
+                eliminado = self.productos.pop(i)
+                if self.guardar_inventario():
+                    print(f"Producto eliminado y archivo actualizado: {eliminado.to_string()}")
+                else:
+                    print(f"Producto eliminado en memoria, pero fallo al actualizar archivo: {eliminado.to_string()}")
+                return True
+        print("Producto no encontrado.")
+        return False
+
+    def actualizar_producto(self, id_producto):
+        for prod in self.productos:
+            if prod.get_id() == id_producto:
+                print(f"Producto actual: {prod.to_string()}")
+                opcion = input("¿Qué desea actualizar? (1: Cantidad, 2: Precio): ")
+
+                try:
+                    if opcion == "1":
+                        nueva_cantidad = int(input("Nueva cantidad: "))
+                        prod.set_cantidad(nueva_cantidad)
+                        print("Cantidad actualizada.")
+                    elif opcion == "2":
+                        nuevo_precio = float(input("Nuevo precio: "))
+                        prod.set_precio(nuevo_precio)
+                        print("Precio actualizado.")
+                    else:
+                        print("Opción inválida.")
+                        return True
+
+                    if self.guardar_inventario():
+                        print("Cambios guardados exitosamente en el archivo.")
+                    else:
+                        print("Cambios aplicados en memoria, pero fallo al guardar en archivo.")
+                    return True
+                except ValueError:
+                    print("Error: Ingrese valores numéricos válidos.")
+                    return True
+
+        print("Producto no encontrado.")
+        return False
+
+    def buscar_por_nombre(self, nombre):
+        encontrados = []
+        for prod in self.productos:
+            if nombre.lower() in prod.get_nombre().lower():
+                encontrados.append(prod)
+
+        if encontrados:
+            print("\nProductos encontrados:")
+            for prod in encontrados:
+                print(prod.to_string())
+        else:
+            print("No se encontraron productos con ese nombre.")
+        return encontrados
+
+    def mostrar_todos(self):
+        if not self.productos:
+            print("El inventario está vacío.")
+            return
+
+        print("\n=== INVENTARIO COMPLETO ===")
+        for prod in self.productos:
+            print(prod.to_string())
+        print("=" * 50)
+
 
