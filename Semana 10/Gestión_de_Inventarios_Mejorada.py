@@ -5,7 +5,6 @@ class Producto:
         self._cantidad = cantidad
         self._precio = precio
 
-    # Getters
     def get_id(self):
         return self._id
 
@@ -18,7 +17,6 @@ class Producto:
     def get_precio(self):
         return self._precio
 
-    # Setters
     def set_nombre(self, nombre):
         self._nombre = nombre
 
@@ -32,12 +30,10 @@ class Producto:
         return f"ID: {self._id}, Nombre: {self._nombre}, Cantidad: {self._cantidad}, Precio: ${self._precio:.2f}"
 
     def to_file_line(self):
-        """Formato para escribir en archivo: ID|nombre|cantidad|precio"""
         return f"{self._id}|{self._nombre}|{self._cantidad}|{self._precio}"
 
     @classmethod
     def from_file_line(cls, line):
-        """Crear Producto desde línea de archivo"""
         try:
             parts = line.strip().split('|')
             if len(parts) != 4:
@@ -47,6 +43,8 @@ class Producto:
         except (ValueError, IndexError) as e:
             print(f"Error al leer línea del archivo: {line.strip()} - {e}")
             return None
+
+
 class Inventario:
     def __init__(self, archivo='inventario.txt'):
         self.productos = []
@@ -54,7 +52,6 @@ class Inventario:
         self.cargar_inventario()
 
     def guardar_inventario(self):
-        """Guardar todos los productos en el archivo"""
         try:
             with open(self.archivo, 'w', encoding='utf-8') as f:
                 for producto in self.productos:
@@ -68,7 +65,6 @@ class Inventario:
             return False
 
     def cargar_inventario(self):
-        """Cargar productos desde el archivo"""
         try:
             with open(self.archivo, 'r', encoding='utf-8') as f:
                 for line_num, linea in enumerate(f, 1):
@@ -79,15 +75,15 @@ class Inventario:
             return True
         except FileNotFoundError:
             print(f"Archivo {self.archivo} no encontrado. Se creará uno nuevo.")
-            return True  # No hay error, simplemente no existe
+            return True
         except PermissionError:
             print(f"Error: No hay permisos para leer {self.archivo}")
             return False
         except Exception as e:
             print(f"Error al cargar inventario: {e}")
             return False
- def agregar_producto(self, producto):
-        # Verificar si ya existe un producto con el mismo ID
+
+    def agregar_producto(self, producto):
         for prod in self.productos:
             if prod.get_id() == producto.get_id():
                 print("Error: Ya existe un producto con ese ID.")
@@ -166,6 +162,8 @@ class Inventario:
         for prod in self.productos:
             print(prod.to_string())
         print("=" * 50)
+
+
 def mostrar_menu():
     print("\n=== SISTEMA DE GESTIÓN DE INVENTARIOS MEJORADO ===")
     print("1. Añadir nuevo producto")
@@ -221,7 +219,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
 
 
