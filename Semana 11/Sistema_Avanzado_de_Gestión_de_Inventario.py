@@ -99,3 +99,24 @@ class Inventario:
                     f.write(linea)
             print(f"Inventario guardado en {self.__archivo}.")
 
+# CARGAR DESDE ARCHIVO TXT
+    def cargar_inventario(self):
+         try:
+              with open(self.__archivo, "r", encoding="utf-8") as f:
+                  for linea in f:
+                    linea = linea.strip()
+                    if not linea:
+                        continue
+                    partes = linea.split(",")                        if len(partes) != 4:
+                        continue
+                    id_producto, nombre, cantidad_str, precio_str = partes
+                    try:
+                        cantidad = int(cantidad_str)
+                        precio = float(precio_str)
+                        p = Producto(id_producto, nombre, cantidad, precio)
+                        self.__productos[id_producto] = p
+                        except ValueError:
+                        print(f"Ignorando línea mal formada: {linea}")
+                print("Inventario cargado desde inventario.txt.")
+            except FileNotFoundError:
+               print("No se encontró archivo de inventario. Se iniciará uno vacío.")
