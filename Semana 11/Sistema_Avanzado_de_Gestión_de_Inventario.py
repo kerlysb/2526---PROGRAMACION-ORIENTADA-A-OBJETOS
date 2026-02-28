@@ -37,6 +37,8 @@ class Producto:
     def __str__(self) -> str:
         return f"ID: {self.__id_producto} | Nombre: {self.__nombre} | " \
                f"Cantidad: {self.__cantidad} | Precio: ${self.__precio:.2f}"
+
+
 class Inventario:
     def __init__(self, archivo: str = "inventario.txt"):
         self.__productos: Dict[str, Producto] = {}
@@ -91,23 +93,24 @@ class Inventario:
             for prod in self.__productos.values():
                 print(prod)
 
-      # GUARDAR EN ARCHIVO TXT (formato: ID,nombre,cantidad,precio)
+    # GUARDAR EN ARCHIVO TXT (formato: ID,nombre,cantidad,precio)
     def guardar_inventario(self):
-         with open(self.__archivo, "w", encoding="utf-8") as f:
-             for prod in self.__productos.values():
-                    linea = f"{prod.get_id()},{prod.get_nombre()},{prod.get_cantidad()},{prod.get_precio()}\n"
-                    f.write(linea)
-            print(f"Inventario guardado en {self.__archivo}.")
+        with open(self.__archivo, "w", encoding="utf-8") as f:
+            for prod in self.__productos.values():
+                linea = f"{prod.get_id()},{prod.get_nombre()},{prod.get_cantidad()},{prod.get_precio()}\n"
+                f.write(linea)
+        print(f"Inventario guardado en {self.__archivo}.")
 
-# CARGAR DESDE ARCHIVO TXT
+    # CARGAR DESDE ARCHIVO TXT
     def cargar_inventario(self):
-         try:
-              with open(self.__archivo, "r", encoding="utf-8") as f:
-                  for linea in f:
+        try:
+            with open(self.__archivo, "r", encoding="utf-8") as f:
+                for linea in f:
                     linea = linea.strip()
                     if not linea:
                         continue
-                    partes = linea.split(",")                        if len(partes) != 4:
+                    partes = linea.split(",")
+                    if len(partes) != 4:
                         continue
                     id_producto, nombre, cantidad_str, precio_str = partes
                     try:
@@ -115,8 +118,80 @@ class Inventario:
                         precio = float(precio_str)
                         p = Producto(id_producto, nombre, cantidad, precio)
                         self.__productos[id_producto] = p
-                        except ValueError:
+                    except ValueError:
                         print(f"Ignorando línea mal formada: {linea}")
-                print("Inventario cargado desde inventario.txt.")
-            except FileNotFoundError:
-               print("No se encontró archivo de inventario. Se iniciará uno vacío.")
+            print("Inventario cargado desde inventario.txt.")
+        except FileNotFoundError:
+            print("No se encontró archivo de inventario. Se iniciará uno vacío.")
+
+
+# MENÚ INTERACTIVO
+def menu():
+    inventario = Inventario()
+
+    while True:
+        print("\n=== SISTEMA AVANZADO DE GESTIÓN DE INVENTARIO ===")
+        print("1. Añadir producto")
+        print("2. Eliminar producto por ID")
+        print("3. Actualizar cantidad de producto")
+        print("4. Actualizar precio de producto")
+        print("5. Buscar producto por nombre")
+        print("6. Mostrar todos los productos")
+        print("7. Guardar y salir")
+        print("0. Salir sin guardar")
+
+        opcion = input("Elige una opción: ").strip()
+
+        if opcion == "1":
+            id_ = input("ID del producto: ").strip()
+            nombre = input("Nombre del producto: ").strip()
+            try:
+                cantidad = int(input("Cantidad: "))
+                precio = float(input("Precio: "))
+                p = Producto(id_, nombre, cantidad, precio)
+                inventario.agregar_producto(p)
+            except ValueError:
+                print("Cantidad o precio inválido.")
+
+        elif opcion == "2":
+            id_ = input("ID del producto a eliminar: ").strip()
+            inventario.eliminar_producto(id_)
+
+        elif opcion == "3":
+            id_ = input("ID del producto: ").strip()
+            try:
+                nueva = int(input("Nueva cantidad: "))
+                inventario.actualizar_cantidad(id_, nueva)
+            except ValueError:
+                print("Cantidad inválida.")
+
+        elif opcion == "4":
+            id_ = input("ID del producto: ").strip()
+            try:
+                nuevo = float(input("Nuevo precio: "))
+                inventario.actualizar_precio(id_, nuevo)
+            except ValueError:
+                print("Precio inválido.")
+
+        elif opcion == "5":
+            nombre = input("Nombre (o parte del nombre): ").strip()
+            inventario.buscar_por_nombre(nombre)
+
+        elif opcion == "6":
+            inventario.mostrar_todos()
+
+        elif opcion == "7":
+            inventario.guardar_inventario()
+            print("¡Hasta luego!")
+            break
+
+        elif opcion == "0":
+            print("Saliendo sin guardar cambios.")
+            break
+
+        else:
+            print("Opción no válida.")
+
+
+if __name__ == "__main__":
+    menu()
