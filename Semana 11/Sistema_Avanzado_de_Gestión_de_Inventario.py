@@ -37,3 +37,56 @@ class Producto:
     def __str__(self) -> str:
         return f"ID: {self.__id_producto} | Nombre: {self.__nombre} | " \
                f"Cantidad: {self.__cantidad} | Precio: ${self.__precio:.2f}"
+class Inventario:
+    def __init__(self, archivo: str = "inventario.txt"):
+        self.__productos: Dict[str, Producto] = {}
+        self.__archivo = archivo
+        self.cargar_inventario()
+
+    def agregar_producto(self, producto: Producto):
+        if producto.get_id() in self.__productos:
+            print("ERROR: Ya existe un producto con ese ID.")
+        else:
+            self.__productos[producto.get_id()] = producto
+            print("Producto agregado correctamente.")
+
+    def eliminar_producto(self, id_producto: str):
+        if id_producto in self.__productos:
+            del self.__productos[id_producto]
+            print("Producto eliminado.")
+        else:
+            print("ERROR: No se encontró un producto con ese ID.")
+
+    def actualizar_cantidad(self, id_producto: str, nueva_cantidad: int):
+        if id_producto in self.__productos:
+            self.__productos[id_producto].set_cantidad(nueva_cantidad)
+            print("Cantidad actualizada.")
+        else:
+            print("ERROR: Producto no encontrado.")
+
+    def actualizar_precio(self, id_producto: str, nuevo_precio: float):
+        if id_producto in self.__productos:
+            self.__productos[id_producto].set_precio(nuevo_precio)
+            print("Precio actualizado.")
+        else:
+            print("ERROR: Producto no encontrado.")
+
+    def buscar_por_nombre(self, nombre: str):
+        encontrados = []
+        for prod in self.__productos.values():
+            if nombre.lower() in prod.get_nombre().lower():
+                encontrados.append(prod)
+        if encontrados:
+            print(f"Productos que contienen '{nombre}':")
+            for p in encontrados:
+                print(p)
+        else:
+            print(f"No se encontraron productos con el nombre '{nombre}'.")
+
+    def mostrar_todos(self):
+        if not self.__productos:
+            print("El inventario está vacío.")
+        else:
+            print("\n--- INVENTARIO ACTUAL ---")
+            for prod in self.__productos.values():
+                print(prod)
