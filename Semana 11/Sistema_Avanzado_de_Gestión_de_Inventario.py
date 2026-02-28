@@ -90,3 +90,12 @@ class Inventario:
             print("\n--- INVENTARIO ACTUAL ---")
             for prod in self.__productos.values():
                 print(prod)
+
+      # GUARDAR EN ARCHIVO TXT (formato: ID,nombre,cantidad,precio)
+    def guardar_inventario(self):
+         with open(self.__archivo, "w", encoding="utf-8") as f:
+             for prod in self.__productos.values():
+                    linea = f"{prod.get_id()},{prod.get_nombre()},{prod.get_cantidad()},{prod.get_precio()}\n"
+                    f.write(linea)
+            print(f"Inventario guardado en {self.__archivo}.")
+
