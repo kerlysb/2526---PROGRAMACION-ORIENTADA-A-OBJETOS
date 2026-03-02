@@ -101,3 +101,56 @@ class Biblioteca:
         usuario = self.usuarios[id_usuario]
         return [self.libros[isbn] for isbn in usuario.libros_prestados if isbn in self.libros]
 
+def menu(biblio: Biblioteca):
+    while True:
+        print("\n=== BIENVENID@ A LA BIBLIOTECA DIGITAL ===")
+        print(" ¿Qué te gustaría hacer hoy?")
+        print("1. Añadir libro      | 2. Quitar libro")
+        print("3. Registrar usuario | 4. Dar baja usuario")
+        print("5. Prestar libro     | 6. Devolver libro")
+        print("7. Buscar libros     | 8. Listar prestados de usuario")
+        print("0. Salir")
+        opcion = input("Selecciona una opción del menú: ").strip()
+
+        if opcion == "1":
+            titulo = input("Título: ")
+            autor = input("Autor: ")
+            cat = input("Categoría: ")1
+            isbn = input("ISBN: ")
+            biblio.anadir_libro(Libro(titulo, autor, cat, isbn))
+        elif opcion == "2":
+            isbn = input("ISBN a quitar: ")
+            biblio.quitar_libro(isbn)
+        elif opcion == "3":
+            nombre = input("Nombre: ")
+            idu = input("ID único: ")
+            biblio.registrar_usuario(Usuario(nombre, idu))
+        elif opcion == "4":
+            idu = input("ID a dar de baja: ")
+            biblio.dar_baja_usuario(idu)
+        elif opcion == "5":
+            isbn = input("ISBN: ")
+            idu = input("ID usuario: ")
+            biblio.prestar_libro(isbn, idu)
+        elif opcion == "6":
+            isbn = input("ISBN: ")
+            idu = input("ID usuario: ")
+            biblio.devolver_libro(isbn, idu)
+        elif opcion == "7":
+            crit = input("Criterio (titulo/autor/categoria): ")
+            val = input("Valor: ")
+            for l in biblio.buscar_libros(crit, val):
+                print(f"  - {l}")
+        elif opcion == "8":
+            idu = input("ID usuario: ")
+            for l in biblio.listar_prestados_usuario(idu):
+                print(f"  - {l}")
+        elif opcion == "0":
+            print("¡Gracias por visitar nuestra biblioteca digital, que tengas una feliz lectura!")
+            break
+        else:
+            print("Opción inválida.")
+
+if __name__ == "__main__":
+    biblio = Biblioteca()
+    menu(biblio)
