@@ -1,8 +1,11 @@
 from typing import Tuple, Dict, Set, List
+import json
+import os
+
 
 class Libro:
     def __init__(self, titulo: str, autor: str, categoria: str, isbn: str):
-        self._titulo_autor: Tuple[str, str] = (titulo, autor)  # Tupla inmutable
+        self._titulo_autor: Tuple[str, str] = (titulo, autor)
         self.categoria: str = categoria
         self.isbn: str = isbn
 
@@ -10,20 +13,85 @@ class Libro:
         titulo, autor = self._titulo_autor
         return f"{titulo} por {autor} (Categoría: {self.categoria}, ISBN: {self.isbn})"
 
+    def to_dict(self) -> dict:
+        titulo, autor = self._titulo_autor
+        return {"titulo": titulo, "autor": autor, "categoria": self.categoria, "isbn": self.isbn}
+
+    @classmethod
+    def from_dict(cls, data: dict):
+        return cls(data["titulo"], data["autor"], data["categoria"], data["isbn"])
+
+
 class Usuario:
     def __init__(self, nombre: str, id_usuario: str):
         self.nombre: str = nombre
         self.id_usuario: str = id_usuario
-        self.libros_prestados: List[str] = []  # Lista de ISBNs
+        self.libros_prestados: List[str] = []
 
     def __str__(self) -> str:
         return f"Usuario {self.nombre} (ID: {self.id_usuario}), prestados: {len(self.libros_prestados)}"
 
+    def to_dict(self) -> dict:
+        return {
+            "nombre": self.nombre,
+            "id_usuario": self.id_usuario,
+            "libros_prestados": self.libros_prestados
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict):
+        usuario = cls(data["nombre"], data["id_usuario"])
+        usuario.libros_prestados = data["libros_prestados"]
+        return usuario
+
+
 class Biblioteca:
-    def __init__(self):
-        self.libros: Dict[str, Libro] = {}  # ISBN -> Libro
-        self.usuarios_ids: Set[str] = set()  # IDs únicos
-        self.usuarios: Dict[str, Usuario] = {}  # ID -> Usuario
+    def __init__(self, archivo_libros: str = "libros.json", archivo_usuarios: str = "usuarios.json"):
+        self.libros: Dict[str, Libro] = {}
+        self.usuarios_ids: Set[str] = set()
+        self.usuarios: Dict[str, Usuario] = {}
+        self.archivo_libros = archivo_libros
+        self.archivo_usuarios = archivo_usuarios
+        self.cargar_datos()
+
+    def guardar_datos(self):
+        # Guardar libros
+        libros_data = {isbn: libro.to_dict() for isbn, libro in self.libros.items()}
+        with open(self.archivo_libros, "w", encoding="utf-8") as f:
+            json.dump(libros_data, f, ensure_ascii=False, indent=2)
+
+        # Guardar usuarios
+        usuarios_data = {id_u: usuario.to_dict() for id_u, usuario in self.usuarios.items()}
+        with open(self.archivo_usuarios, "w", encoding="utf-8") as f:
+            json.dump(usuarios_data, f, ensure_ascii=False, indent=2)
+        print(f"💾 Datos guardados en {self.archivo_libros} y {self.archivo_usuarios}")
+
+    def cargar_datos(self):
+        # Cargar libros
+        if os.path.exists(self.archivo_libros):
+            try:
+                with open(self.archivo_libros, "r", encoding="utf-8") as f:
+                    libros_data = json.load(f)
+                    for isbn, data in libros_data.items():
+                        self.libros[isbn] = Libro.from_dict(data)
+                print(f"📚 Cargados {len(self.libros)} libros desde {self.archivo_libros}")
+            except:
+                print("⚠️ Error cargando libros, inicio vacío")
+
+        # Cargar usuarios
+        if os.path.exists(self.archivo_usuarios):
+            try:
+                with open(self.archivo_usuarios, "r", encoding="utf-8") as f:
+                    usuarios_data = json.load(f)
+                    for id_u, data in usuarios_data.items():
+                        usuario = Usuario.from_dict(data)
+                        self.usuarios[id_u] = usuario
+                        self.usuarios_ids.add(id_u)
+                        # Validar préstamos
+                        usuario.libros_prestados = [isbn for isbn in usuario.libros_prestados if isbn in self.libros]
+                print(f"👥 Cargados {len(self.usuarios)} usuarios desde {self.archivo_usuarios}")
+            except:
+                print("⚠️ Error cargando usuarios, inicio vacío")
 
     def anadir_libro(self, libro: Libro) -> bool:
         if libro.isbn in self.libros:
@@ -35,6 +103,10 @@ class Biblioteca:
 
     def quitar_libro(self, isbn: str) -> bool:
         if isbn in self.libros:
+            # Devolver préstamos automáticos
+            for usuario in self.usuarios.values():
+                if isbn in usuario.libros_prestados:
+                    usuario.libros_prestados.remove(isbn)
             del self.libros[isbn]
             print(f"✅ Quitado ISBN {isbn}")
             return True
@@ -54,10 +126,6 @@ class Biblioteca:
         if id_usuario not in self.usuarios_ids:
             print(f"❌ Usuario {id_usuario} no existe.")
             return False
-        # Devolver préstamos automáticos
-        usuario = self.usuarios[id_usuario]
-        for isbn in usuario.libros_prestados[:]:
-            self.devolver_libro(isbn, id_usuario)
         del self.usuarios[id_usuario]
         self.usuarios_ids.remove(id_usuario)
         print(f"✅ Baja de {id_usuario}")
@@ -90,8 +158,8 @@ class Biblioteca:
         for libro in self.libros.values():
             titulo, autor = libro._titulo_autor
             if (criterio == "titulo" and valor.lower() in titulo.lower()) or \
-               (criterio == "autor" and valor.lower() in autor.lower()) or \
-               (criterio == "categoria" and valor.lower() == libro.categoria.lower()):
+                    (criterio == "autor" and valor.lower() in autor.lower()) or \
+                    (criterio == "categoria" and valor.lower() == libro.categoria.lower()):
                 resultados.append(libro)
         return resultados
 
@@ -101,6 +169,7 @@ class Biblioteca:
         usuario = self.usuarios[id_usuario]
         return [self.libros[isbn] for isbn in usuario.libros_prestados if isbn in self.libros]
 
+
 def menu(biblio: Biblioteca):
     while True:
         print("\n=== BIENVENID@ A LA BIBLIOTECA DIGITAL ===")
@@ -109,7 +178,7 @@ def menu(biblio: Biblioteca):
         print("3. Registrar usuario | 4. Dar baja usuario")
         print("5. Prestar libro     | 6. Devolver libro")
         print("7. Buscar libros     | 8. Listar prestados de usuario")
-        print("0. Salir")
+        print("9. Guardar manual    | 0. Salir (guarda auto)")
         opcion = input("Selecciona una opción del menú: ").strip()
 
         if opcion == "1":
