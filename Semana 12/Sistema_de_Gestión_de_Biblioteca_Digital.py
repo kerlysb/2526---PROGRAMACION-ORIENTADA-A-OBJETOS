@@ -115,7 +115,8 @@ def menu(biblio: Biblioteca):
         if opcion == "1":
             titulo = input("Título: ")
             autor = input("Autor: ")
-            cat = input("Categoría: ")1
+            cat = input("Categoría: ")0
+
             isbn = input("ISBN: ")
             biblio.anadir_libro(Libro(titulo, autor, cat, isbn))
         elif opcion == "2":
