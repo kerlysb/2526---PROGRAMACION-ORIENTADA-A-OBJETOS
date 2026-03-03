@@ -93,10 +93,10 @@ class Biblioteca:
             # 3. HISTORIAL (APPEND - NO sobrescribe)
             self.guardar_historial_completo()
 
-            print(" ✅ GUARDADO:")
-            print(f"   📚 {self.libros_txt}: {len(self.libros)} libros")
-            print(f"   👥 {self.usuarios_txt}: {len(self.usuarios)} usuarios")
-            print(f"   📋 {self.historial_txt}: histórico completo")
+            print("  GUARDADO:")
+            print(f"    {self.libros_txt}: {len(self.libros)} libros")
+            print(f"    {self.usuarios_txt}: {len(self.usuarios)} usuarios")
+            print(f"    {self.historial_txt}: histórico completo")
         except Exception as e:
             print(f" Error: {e}")
 
@@ -122,7 +122,7 @@ class Biblioteca:
                             usuario = Usuario.from_txt(linea)
                             self.usuarios[usuario.id_usuario] = usuario
                             self.usuarios_ids.add(usuario.id_usuario)
-                print(f"👥 Cargados {len(self.usuarios)} usuarios")
+                print(f" Cargados {len(self.usuarios)} usuarios")
             except:
                 pass
 
