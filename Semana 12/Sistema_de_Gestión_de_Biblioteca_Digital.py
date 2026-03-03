@@ -302,12 +302,11 @@ def menu_interactivo():
 
         elif opcion == "0":
             biblio.guardar_todo()
-            print("\n👋 ¡Gracias! Los datos han sido guardados exitosamente")
+            print("\n ¡Gracias! Los datos han sido guardados exitosamente")
             break
 
         else:
-            print("❌ Opción inválida")
-
+            print(" Opción inválida")
 
 if __name__ == "__main__":
     menu_interactivo()
