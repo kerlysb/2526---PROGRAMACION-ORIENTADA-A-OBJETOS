@@ -227,7 +227,12 @@ def menu_interactivo():
         elif opcion == "3":
             nombre = input("Nombre: ")
             id_usuario = input("ID único: ")
-            biblio.registrar_usuario(Usuario(nombre, id_usuario))
+            # Verificación Id único
+            if id_usuario in biblio.usuarios_ids:
+                print(f" ¡ID '{id_usuario}' YA ESTÁ REGISTRADO!")
+                print(f"   Usuario actual: {biblio.usuarios[id_usuario].nombre}")
+            else:
+                biblio.registrar_usuario(Usuario(nombre, id_usuario))
 
         elif opcion == "4":
             id_usuario = input("ID usuario: ")
