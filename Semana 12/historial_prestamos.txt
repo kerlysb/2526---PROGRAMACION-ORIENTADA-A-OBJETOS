@@ -4,3 +4,5 @@
 001|Kerly Suarez|1006|Rayuela  por Julio Cortázar (Experimental) [1006]|ACTIVO
 001|Kerly Suarez|1001|1984 por George Orwell (Distopía) [1001]|ACTIVO
 001|Kerly Suarez|1006|Rayuela  por Julio Cortázar (Experimental) [1006]|ACTIVO
+001|Kerly Suarez|1001|1984 por George Orwell (Distopía) [1001]|ACTIVO
+001|Kerly Suarez|1006|Rayuela  por Julio Cortázar (Experimental) [1006]|ACTIVO
