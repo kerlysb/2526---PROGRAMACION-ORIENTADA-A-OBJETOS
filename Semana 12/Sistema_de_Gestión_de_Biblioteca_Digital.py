@@ -236,7 +236,15 @@ def menu_interactivo():
 
         elif opcion == "4":
             id_usuario = input("ID usuario: ")
-            biblio.dar_baja_usuario(id_usuario)
+            if id_usuario in biblio.usuarios_ids:
+                usuario = biblio.usuarios[id_usuario]
+                print(f"  Eliminando usuario: {usuario}")
+                print(f"    Préstamos actuales: {len(usuario.libros_prestados)}")
+                confirm = input("Confirmar baja (s/n): ").lower().strip()
+                if confirm == 's':
+                    biblio.dar_baja_usuario(id_usuario)
+            else:
+                print(f" ID '{id_usuario}' no encontrado")
 
         elif opcion == "5":
             isbn = input("ISBN: ")
@@ -246,7 +254,17 @@ def menu_interactivo():
         elif opcion == "6":
             isbn = input("ISBN: ")
             id_usuario = input("ID usuario: ")
-            biblio.devolver_libro(isbn, id_usuario)
+            if id_usuario in biblio.usuarios_ids and isbn in biblio.usuarios[id_usuario].libros_prestados:
+                usuario = biblio.usuarios[id_usuario]
+                libro = biblio.libros[isbn]
+                print(f"SE ESTA DEVOLVIENDO:")
+                print(f"   📚 Libro: {libro}")
+                print(f"   👤 Usuario: {usuario.nombre} [{id_usuario}]")
+                confirm = input("Confirmar devolución (s/n): ").lower().strip()
+                if confirm == 's':
+                    biblio.devolver_libro(isbn, id_usuario)
+            else:
+                print(f" ERROR: ISBN {isbn} no prestado a {id_usuario}")
 
         elif opcion == "7":
             print("Criterios: titulo, autor, categoria")
