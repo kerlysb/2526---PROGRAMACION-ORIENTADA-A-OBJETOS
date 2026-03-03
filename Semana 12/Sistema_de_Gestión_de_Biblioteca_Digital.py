@@ -1,7 +1,6 @@
 from typing import Tuple, Dict, Set, List
 import os
 
-
 class Libro:
     def __init__(self, titulo: str, autor: str, categoria: str, isbn: str):
         self._titulo_autor: Tuple[str, str] = (titulo, autor)  # TUPLA inmutable
@@ -55,47 +54,54 @@ class Biblioteca:
         self.historial_txt = "historial_prestamos.txt"
         self.cargar_todo()
 
-    def guardar_todo(self):
-        """Se guarda en 3 archivos TXT separados"""
+    def guardar_historial_completo(self):
+        """Guarda historial COMPLETO: préstamos activos"""
         try:
-            # 1. LIBROS DISPONIBLES
+            with open(self.historial_txt, 'a', encoding='utf-8') as f:
+                for id_usuario, usuario in self.usuarios.items():
+                    for isbn in usuario.libros_prestados:
+                        if isbn in self.libros:
+                            linea = f"{id_usuario}|{usuario.nombre}|{isbn}|{self.libros[isbn]}|ACTIVO\n"
+                            f.write(linea)
+            print("    Historial actualizado (préstamos activos)")
+        except Exception as e:
+            print(f"    Error historial: {e}")
+
+    def marcar_devuelto(self, isbn: str, id_usuario: str):
+        """Marca préstamo como DEVUELTO en historial"""
+        try:
+            with open(self.historial_txt, 'a', encoding='utf-8') as f:
+                linea_devuelta = f"{id_usuario}|{self.usuarios[id_usuario].nombre}|{isbn}|{self.libros[isbn]}|DEVUELTO\n"
+                f.write(linea_devuelta)
+            print("    Marcado como DEVUELTO en historial")
+        except:
+            pass
+
+    def guardar_todo(self):
+        """Guarda libros/usuarios + actualiza historial sin borrar viejo"""
+        try:
+            # 1. LIBROS DISPONIBLES (SÍ sobrescribe)
             with open(self.libros_txt, 'w', encoding='utf-8') as f:
                 for libro in self.libros.values():
                     f.write(libro.to_txt() + '\n')
 
-            # 2. USUARIOS REGISTRADOS
+            # 2. USUARIOS REGISTRADOS (SÍ sobrescribe)
             with open(self.usuarios_txt, 'w', encoding='utf-8') as f:
                 for usuario in self.usuarios.values():
                     f.write(usuario.to_txt() + '\n')
 
-            # 3. HISTORIAL PRESTAMOS
-            def guardar_historial_completo(self):
-            """Guarda historial COMPLETO: préstamos activos y devueltos"""
-            try:
-                with open(self.historial_txt, 'a', encoding='utf-8') as f:  # 'a' = APPEND (no sobrescribe)
-                    # SOLO préstamos NUEVOS 0 ACTUALES (que no estén marcados como devueltos)
-                    for id_usuario, usuario in self.usuarios.items():
-                        for isbn in usuario.libros_prestados:
-                            if isbn in self.libros:
-                                linea = f"{id_usuario}|{usuario.nombre}|{isbn}|{self.libros[isbn]}|ACTIVO\n"
-                                f.write(linea)
-                print(f" Historial actualizado (préstamos activos)")
-            except Exception as e:
-                print(f" Error historial: {e}")
+            # 3. HISTORIAL (APPEND - NO sobrescribe)
+            self.guardar_historial_completo()
 
-        def marcar_devuelto(self, isbn: str, id_usuario: str):
-            """Marca préstamo como DEVUELTO en historial"""
-            try:
-                with open(self.historial_txt, 'a', encoding='utf-8') as f:
-                    linea_devuelta = f"{id_usuario}|{self.usuarios[id_usuario].nombre}|{isbn}|{self.libros[isbn]}|DEVUELTO\n"
-                    f.write(linea_devuelta)
-                print(f" Marcado como DEVUELTO en historial")
-            except:
-                pass
+            print(" ✅ GUARDADO:")
+            print(f"   📚 {self.libros_txt}: {len(self.libros)} libros")
+            print(f"   👥 {self.usuarios_txt}: {len(self.usuarios)} usuarios")
+            print(f"   📋 {self.historial_txt}: histórico completo")
+        except Exception as e:
+            print(f" Error: {e}")
 
     def cargar_todo(self):
         print(" CARGANDO ARCHIVOS TXT...")
-
         # 1. LIBROS PRIMERO
         if os.path.exists(self.libros_txt):
             try:
@@ -107,7 +113,6 @@ class Biblioteca:
                 print(f" Cargados {len(self.libros)} libros")
             except:
                 pass
-
         # 2. USUARIOS
         if os.path.exists(self.usuarios_txt):
             try:
@@ -117,7 +122,7 @@ class Biblioteca:
                             usuario = Usuario.from_txt(linea)
                             self.usuarios[usuario.id_usuario] = usuario
                             self.usuarios_ids.add(usuario.id_usuario)
-                print(f" Cargados {len(self.usuarios)} usuarios")
+                print(f"👥 Cargados {len(self.usuarios)} usuarios")
             except:
                 pass
 
@@ -133,7 +138,6 @@ class Biblioteca:
         if isbn not in self.libros:
             print(f" ISBN {isbn} no existe")
             return False
-        # Limpiar préstamos
         for usuario in self.usuarios.values():
             if isbn in usuario.libros_prestados:
                 usuario.libros_prestados.remove(isbn)
@@ -154,7 +158,6 @@ class Biblioteca:
         if id_usuario not in self.usuarios_ids:
             print(f" Usuario {id_usuario} no existe")
             return False
-        # Devolver préstamos
         self.usuarios[id_usuario].libros_prestados.clear()
         del self.usuarios[id_usuario]
         self.usuarios_ids.remove(id_usuario)
@@ -176,13 +179,9 @@ class Biblioteca:
         if id_usuario not in self.usuarios_ids:
             print(f" Usuario {id_usuario} no existe")
             return False
-
         usuario = self.usuarios[id_usuario]
         if isbn in usuario.libros_prestados:
-            # MARCAR EN HISTORIAL ANTES de remover
             self.marcar_devuelto(isbn, id_usuario)
-
-            # REMOVER de préstamos activos
             usuario.libros_prestados.remove(isbn)
             print(f" DEVUELTO: {isbn}")
             return True
@@ -214,11 +213,11 @@ def menu_interactivo():
         print("      Bienvenido a nuestra Biblioteca Digital")
         print("         ¿Qué te gustaría hacer hoy?")
         print(f" LIBROS EXISTENTES: {len(biblio.libros)} |  USUARIOS: {len(biblio.usuarios)}")
-        print("1️  AÑADIR LIBRO       |  2️  QUITAR LIBRO")
-        print("3️  REGISTRAR USUARIO  |  4️  BAJA USUARIO")
-        print("5️  PRESTAR LIBRO      |  6️  DEVOLVER LIBRO")
-        print("7️  BUSCAR LIBROS      |  8️  MIS PRESTAMOS")
-        print("9️  GUARDAR MANUAL     |  0️  SALIR (GUARDADO AUTOMATICO)")
+        print("1️ AÑADIR LIBRO       |  2️ QUITAR LIBRO")
+        print("3️ REGISTRAR USUARIO  |  4️ BAJA USUARIO")
+        print("5️ PRESTAR LIBRO      |  6️ DEVOLVER LIBRO")
+        print("7️ BUSCAR LIBROS      |  8️ MIS PRESTAMOS")
+        print("9️ GUARDAR MANUAL     |  0️ SALIR (GUARDADO AUTOMÁTICO)")
         opcion = input("Selecciona una opción del menú: ").strip()
 
         if opcion == "1":
@@ -227,11 +226,12 @@ def menu_interactivo():
             categoria = input("Categoría: ")
             isbn = input("ISBN: ")
             biblio.anadir_libro(Libro(titulo, autor, categoria, isbn))
+
         elif opcion == "2":
             isbn = input("ISBN a quitar: ")
             if isbn in biblio.libros:
                 libro = biblio.libros[isbn]
-                print(f"Eliminando: {libro}")
+                print(f" Usted esta eliminando: {libro}")
                 confirm = input("Confirmar (s/n): ").lower().strip()
                 if confirm == 's':
                     biblio.quitar_libro(isbn)
@@ -241,7 +241,6 @@ def menu_interactivo():
         elif opcion == "3":
             nombre = input("Nombre: ")
             id_usuario = input("ID único: ")
-            # Verificación Id único
             if id_usuario in biblio.usuarios_ids:
                 print(f" ¡ID '{id_usuario}' YA ESTÁ REGISTRADO!")
                 print(f"   Usuario actual: {biblio.usuarios[id_usuario].nombre}")
@@ -271,23 +270,25 @@ def menu_interactivo():
             if id_usuario in biblio.usuarios_ids and isbn in biblio.usuarios[id_usuario].libros_prestados:
                 usuario = biblio.usuarios[id_usuario]
                 libro = biblio.libros[isbn]
-                print(f"SE ESTA DEVOLVIENDO:")
-                print(f"   📚 Libro: {libro}")
-                print(f"   👤 Usuario: {usuario.nombre} [{id_usuario}]")
+                print(f"USTED ESTA DEVOLVIENDO:")
+                print(f"    Libro: {libro}")
+                print(f"    Usuario: {usuario.nombre} [{id_usuario}]")
                 confirm = input("Confirmar devolución (s/n): ").lower().strip()
                 if confirm == 's':
                     biblio.devolver_libro(isbn, id_usuario)
             else:
                 print(f" ERROR: ISBN {isbn} no prestado a {id_usuario}")
 
+
         elif opcion == "7":
-            print("Criterios: titulo, autor, categoria")
-            criterio = input("Criterio: ")
-            valor = input("Buscar: ")
-            resultados = biblio.buscar_libros(criterio, valor)
-            print(f"\n {len(resultados)} resultado(s):")
-            for libro in resultados:
-                print(f"   {libro}")
+            valor = input("Buscar por TÍTULO: ").strip()
+            resultados = biblio.buscar_libros("titulo", valor)
+            print(f"\n {len(resultados)} resultado(s) por título:")
+            if resultados:
+                for libro in resultados:
+                    print(f"    {libro}")
+            else:
+                print("   No se encontraron libros con ese título")
 
         elif opcion == "8":
             id_usuario = input("Tu ID: ")
@@ -300,29 +301,13 @@ def menu_interactivo():
             biblio.guardar_todo()
 
         elif opcion == "0":
-            def guardar_todo(self):
-                """Guarda libros/usuarios + actualiza historial sin borrar viejo"""
-                try:
-                    # 1. LIBROS DISPONIBLES (SÍ sobrescribe)
-                    with open(self.libros_txt, 'w', encoding='utf-8') as f:
-                        for libro in self.libros.values():
-                            f.write(libro.to_txt() + '\n')
-                    # 2. USUARIOS REGISTRADOS (SÍ sobrescribe)
-                    with open(self.usuarios_txt, 'w', encoding='utf-8') as f:
-                        for usuario in self.usuarios.values():
-                            f.write(usuario.to_txt() + '\n')
-                    # 3. HISTORIAL (APPEND - NO sobrescribe)
-                    self.guardar_historial_completo()
-                    print("💾 ✅ GUARDADO:")
-                    print(f"   📚 {self.libros_txt}: {len(self.libros)} libros")
-                    print(f"   👥 {self.usuarios_txt}: {len(self.usuarios)} usuarios")
-                    print(f"   📋 {self.historial_txt}: histórico completo")
-                except Exception as e:
-                    print(f"❌ Error: {e}")
-            print("\n ¡Gracias! Los datos han sido guardados exitosamente")
+            biblio.guardar_todo()
+            print("\n👋 ¡Gracias! Los datos han sido guardados exitosamente")
             break
 
         else:
-            print("Opción inválida")
+            print("❌ Opción inválida")
+
+
 if __name__ == "__main__":
     menu_interactivo()
