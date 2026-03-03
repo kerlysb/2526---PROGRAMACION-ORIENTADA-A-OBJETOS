@@ -1,0 +1,10 @@
+El Quijote |Miguel Cervantes|Clásico|1002
+Harry Potter|J.K. Rowling|Fantasía|1003
+Cien años |Gabriel Márquez|Realismo|1004
+Crónica |Isabel Allende |Novela|1005
+Rayuela |Julio Cortázar|Experimental|1006
+Don Juan|Lord Byron|Poesía|1007
+La Metamorfosis|Franz Kafka |Existencial|1008
+Orgullo |Jane Austen|Romántica|1009
+El Alquimista |Paulo Coelho |Autoayuda|1010
+1984|George Orwell|Distopía|1001
