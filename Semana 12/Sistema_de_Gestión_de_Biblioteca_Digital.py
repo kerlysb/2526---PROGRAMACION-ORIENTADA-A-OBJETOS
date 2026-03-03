@@ -69,20 +69,29 @@ class Biblioteca:
                     f.write(usuario.to_txt() + '\n')
 
             # 3. HISTORIAL PRESTAMOS
-            with open(self.historial_txt, 'w', encoding='utf-8') as f:
-                for id_usuario, usuario in self.usuarios.items():
-                    for isbn in usuario.libros_prestados:
-                        if isbn in self.libros:
-                            libro = self.libros[isbn]
-                            f.write(f"{id_usuario}|{usuario.nombre}|{isbn}|{libro}\n")
+            def guardar_historial_completo(self):
+            """Guarda historial COMPLETO: préstamos activos y devueltos"""
+            try:
+                with open(self.historial_txt, 'a', encoding='utf-8') as f:  # 'a' = APPEND (no sobrescribe)
+                    # SOLO préstamos NUEVOS 0 ACTUALES (que no estén marcados como devueltos)
+                    for id_usuario, usuario in self.usuarios.items():
+                        for isbn in usuario.libros_prestados:
+                            if isbn in self.libros:
+                                linea = f"{id_usuario}|{usuario.nombre}|{isbn}|{self.libros[isbn]}|ACTIVO\n"
+                                f.write(linea)
+                print(f" Historial actualizado (préstamos activos)")
+            except Exception as e:
+                print(f" Error historial: {e}")
 
-            print("  GUARDADO:")
-            print(f"   📚 {self.libros_txt}: {len(self.libros)} libros")
-            print(f"   👥 {self.usuarios_txt}: {len(self.usuarios)} usuarios")
-            print(
-                f"   📋 {self.historial_txt}: {sum(len(u.libros_prestados) for u in self.usuarios.values())} préstamos")
-        except Exception as e:
-            print(f" Error guardando: {e}")
+        def marcar_devuelto(self, isbn: str, id_usuario: str):
+            """Marca préstamo como DEVUELTO en historial"""
+            try:
+                with open(self.historial_txt, 'a', encoding='utf-8') as f:
+                    linea_devuelta = f"{id_usuario}|{self.usuarios[id_usuario].nombre}|{isbn}|{self.libros[isbn]}|DEVUELTO\n"
+                    f.write(linea_devuelta)
+                print(f" Marcado como DEVUELTO en historial")
+            except:
+                pass
 
     def cargar_todo(self):
         print(" CARGANDO ARCHIVOS TXT...")
@@ -167,8 +176,13 @@ class Biblioteca:
         if id_usuario not in self.usuarios_ids:
             print(f" Usuario {id_usuario} no existe")
             return False
+
         usuario = self.usuarios[id_usuario]
         if isbn in usuario.libros_prestados:
+            # MARCAR EN HISTORIAL ANTES de remover
+            self.marcar_devuelto(isbn, id_usuario)
+
+            # REMOVER de préstamos activos
             usuario.libros_prestados.remove(isbn)
             print(f" DEVUELTO: {isbn}")
             return True
@@ -286,7 +300,25 @@ def menu_interactivo():
             biblio.guardar_todo()
 
         elif opcion == "0":
-            biblio.guardar_todo()
+            def guardar_todo(self):
+                """Guarda libros/usuarios + actualiza historial sin borrar viejo"""
+                try:
+                    # 1. LIBROS DISPONIBLES (SÍ sobrescribe)
+                    with open(self.libros_txt, 'w', encoding='utf-8') as f:
+                        for libro in self.libros.values():
+                            f.write(libro.to_txt() + '\n')
+                    # 2. USUARIOS REGISTRADOS (SÍ sobrescribe)
+                    with open(self.usuarios_txt, 'w', encoding='utf-8') as f:
+                        for usuario in self.usuarios.values():
+                            f.write(usuario.to_txt() + '\n')
+                    # 3. HISTORIAL (APPEND - NO sobrescribe)
+                    self.guardar_historial_completo()
+                    print("💾 ✅ GUARDADO:")
+                    print(f"   📚 {self.libros_txt}: {len(self.libros)} libros")
+                    print(f"   👥 {self.usuarios_txt}: {len(self.usuarios)} usuarios")
+                    print(f"   📋 {self.historial_txt}: histórico completo")
+                except Exception as e:
+                    print(f"❌ Error: {e}")
             print("\n ¡Gracias! Los datos han sido guardados exitosamente")
             break
 
