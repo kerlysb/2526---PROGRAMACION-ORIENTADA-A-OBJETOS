@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 
 """
 Descripción de la Aplicación
@@ -15,4 +15,8 @@ ttk.Treeview para mostrar los contactos en formato tabular con columnas
 organizadas, respondiendo a los eventos de clic del usuario de manera eficiente.
 """
 
+# Ventana principal
+ventana = tk.Tk()
+ventana.title("Registro de Contactos")
+ventana.geometry("650x550")
 
