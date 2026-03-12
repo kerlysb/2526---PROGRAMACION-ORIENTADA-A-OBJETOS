@@ -30,7 +30,7 @@ def agregar_contacto():
         limpiar_campos()
     else:
         messagebox.showwarning("Error", "¡Llena todos los campos!")
-
+# Función para limpiar
 def limpiar_campos():
     entry_nombre.delete(0, tk.END)
     entry_telefono.delete(0, tk.END)
