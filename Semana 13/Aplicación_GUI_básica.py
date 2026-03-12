@@ -46,7 +46,7 @@ def salir():
     if messagebox.askyesno("Salir", "¿Quieres salir?"):
         ventana.quit()
 
-# Labels y Entries
+# Etiquetas y Entradas
 tk.Label(ventana, text="Nombre:").pack(pady=5)
 entry_nombre = tk.Entry(ventana, width=40)
 entry_nombre.pack(pady=2)
