@@ -25,7 +25,7 @@ def agregar_contacto():
     nombre = entry_nombre.get().strip()
     telefono = entry_telefono.get().strip()
     correo = entry_correo.get().strip()
-    if nombre and telefono and correo:
+    if nombre and telefono and correo: # Verifica que no estén vacíos
         tabla.insert('', tk.END, values=(nombre, telefono, correo))
         limpiar_campos()
     else:
