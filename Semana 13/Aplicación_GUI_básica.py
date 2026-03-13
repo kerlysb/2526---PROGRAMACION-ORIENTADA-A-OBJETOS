@@ -84,11 +84,11 @@ btn_agregar = tk.Button(ventana,
                         font=("Arial", 10, "bold"))
 btn_agregar.pack(pady=15)
 
-# === TABLA ===
+# Tabla exterior
 frame_tabla = tk.LabelFrame(ventana, text="Lista de Contactos", font=("Arial", 11, "bold"))
 frame_tabla.pack(pady=10, padx=10, fill="both", expand=False)
 
-# Scrollbar y tabla
+# Tablas de contenido
 scrollbar = ttk.Scrollbar(frame_tabla)
 scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
