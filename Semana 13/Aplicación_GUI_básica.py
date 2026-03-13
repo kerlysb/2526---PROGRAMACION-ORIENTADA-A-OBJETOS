@@ -104,7 +104,7 @@ tabla.column('Teléfono', width=130)
 tabla.column('Correo', width=160)
 tabla.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-# === BOTONES LIMPIAR Y SALIR (¡GARANTIZADOS VISIBLES!) ===
+# Configuración de botones limpiar y salir
 frame_botones = tk.Frame(ventana)
 frame_botones.pack(pady=20)
 
