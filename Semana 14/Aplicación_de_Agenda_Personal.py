@@ -44,38 +44,35 @@ class DatePicker(tk.Toplevel):
         self.month_str_var = tk.StringVar()
         self.year_str_var.set(self.year)
         self.month_str_var.set(self.month)
-
-        # ── Fila 0: controles de MES ──────────────────────────────────────────
         self.month_lbl = tk.Label(self.frame1, textvariable=self.month_str_var,
                                   width=14, font=('Arial', 12, 'bold'),
                                   bg="#D8BFD8", relief="raised", borderwidth=2)
         self.month_lbl.grid(row=0, column=1, padx=8, pady=(5, 2))
 
-        # ── Fila 1: controles de AÑO ──────────────────────────────────────────
         self.year_lbl = tk.Label(self.frame1, textvariable=self.year_str_var,
                                  width=6, font=('Arial', 12, 'bold'),
                                  bg="#E6E6FA", relief="raised", borderwidth=2)
         self.year_lbl.grid(row=1, column=1, padx=8, pady=(2, 5))
 
     def init_buttons(self):
-        # ── Fila 0: botones de MES ────────────────────────────────────────────
-        self.left_mon = tk.Button(self.frame1, text="◀ Mes", command=self.prev_month,
+        # Botones de MES
+        self.left_mon = tk.Button(self.frame1, text="◀", command=self.prev_month,
                                   bg="#E6E6FA", activebackground="#D4D4F8", activeforeground="#4B0082",
                                   relief="raised", borderwidth=3, font=('Arial', 9, 'bold'))
         self.left_mon.grid(row=0, column=0, padx=4, pady=(5, 2))
 
-        self.right_mon = tk.Button(self.frame1, text="Mes ▶", command=self.next_month,
+        self.right_mon = tk.Button(self.frame1, text="▶", command=self.next_month,
                                    bg="#E6E6FA", activebackground="#D4D4F8", activeforeground="#4B0082",
                                    relief="raised", borderwidth=3, font=('Arial', 9, 'bold'))
         self.right_mon.grid(row=0, column=2, padx=4, pady=(5, 2))
 
-        # ── Fila 1: botones de AÑO ────────────────────────────────────────────
-        self.left_yr = tk.Button(self.frame1, text="◀ Año", command=self.prev_year,
+        # Botones de AÑO
+        self.left_yr = tk.Button(self.frame1, text="◀", command=self.prev_year,
                                  bg="#D8BFD8", activebackground="#C8A8C8", activeforeground="#4B0082",
                                  relief="raised", borderwidth=3, font=('Arial', 9, 'bold'))
         self.left_yr.grid(row=1, column=0, padx=4, pady=(2, 5))
 
-        self.right_yr = tk.Button(self.frame1, text="Año ▶", command=self.next_year,
+        self.right_yr = tk.Button(self.frame1, text="▶", command=self.next_year,
                                   bg="#D8BFD8", activebackground="#C8A8C8", activeforeground="#4B0082",
                                   relief="raised", borderwidth=3, font=('Arial', 9, 'bold'))
         self.right_yr.grid(row=1, column=2, padx=4, pady=(2, 5))
