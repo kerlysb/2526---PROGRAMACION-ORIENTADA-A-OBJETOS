@@ -167,8 +167,8 @@ class DatePicker(tk.Toplevel):
 class AgendaApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Agenda Personal - Tkint")
-        self.root.geometry("900x600")
+        self.root.title("Mi Agenda Personal")
+        self.root.geometry("800x500")
         self.root.minsize(700, 500)
 
         frame_superior = ttk.LabelFrame(root, text="Eventos Programados")
@@ -217,17 +217,17 @@ class AgendaApp:
         frame_botones.pack(fill=tk.X, padx=10, pady=(5, 10))
 
         self.btn_agregar = tk.Button(frame_botones, text="➕ Agregar Evento", command=self.agregar_evento,
-                                     bg="#DDA0DD", activebackground="#C71585", activeforeground="white",
+                                     bg="#A8A8FF", activebackground="#C71585", activeforeground="white",
                                      relief="raised", borderwidth=5, font=('Arial', 11, 'bold'))
         self.btn_agregar.pack(side=tk.LEFT, padx=(0, 15))
 
         self.btn_eliminar = tk.Button(frame_botones, text="🗑️ Eliminar Seleccionado", command=self.eliminar_evento,
-                                      bg="#D8BFD8", activebackground="#9370DB", activeforeground="white",
+                                      bg="#FF4C4C", activebackground="#9370DB", activeforeground="white",
                                       relief="raised", borderwidth=5, font=('Arial', 11, 'bold'))
         self.btn_eliminar.pack(side=tk.LEFT, padx=(0, 15))
 
         self.btn_salir = tk.Button(frame_botones, text="❌ Salir", command=root.quit,
-                                   bg="#E6E6FA", activebackground="#BA55D3", activeforeground="white",
+                                   bg="#2ECC71", activebackground="#BA55D3", activeforeground="white",
                                    relief="raised", borderwidth=5, font=('Arial', 11, 'bold'))
         self.btn_salir.pack(side=tk.RIGHT)
 
