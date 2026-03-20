@@ -238,7 +238,7 @@ class AgendaApp:
         hora = self.entry_hora.get().strip()
         desc = self.entry_desc.get().strip()
         if not (fecha and hora and desc):
-            messagebox.showwarning("¡Advertencia!", "Complete todos los campos")
+            messagebox.showwarning("¡Advertencia!", "Completa todos los campos")
             return
         self.tree.insert("", tk.END, values=(fecha, hora, desc))
         self.limpiar_campos()
