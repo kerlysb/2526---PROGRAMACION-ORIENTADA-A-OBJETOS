@@ -148,7 +148,7 @@ class DatePicker(tk.Toplevel):
                 btn.bind('<Button-1>', lambda e, d=day: self.get_date(d))
                 self.buttons[day] = btn
 
-        # Refrescar estado de botones de año al redibujar
+        # Refrescamiento de estado de botones de año
         self._update_year_buttons(year)
 
     def get_date(self, day):
@@ -167,7 +167,7 @@ class DatePicker(tk.Toplevel):
 class AgendaApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Agenda Personal - Tkinter")
+        self.root.title("Agenda Personal - Tkint")
         self.root.geometry("900x600")
         self.root.minsize(700, 500)
 
@@ -199,7 +199,7 @@ class AgendaApp:
         self.entry_fecha.grid(row=0, column=1, padx=5, pady=8, sticky=tk.W)
         self.btn_fecha = tk.Button(self.frame_entrada, text="📅 Seleccionar",
                                    command=lambda: DatePicker(self.entry_fecha),
-                                   bg="#E6E6FA", activebackground="#D4D4F8", activeforeground="#4B0082",
+                                   bg="#E6E6FA", activebackground="#FFF9E6", activeforeground="#4B0082",
                                    relief="raised", borderwidth=4, font=('Arial', 10, 'bold'))
         self.btn_fecha.grid(row=0, column=2, padx=5)
 
