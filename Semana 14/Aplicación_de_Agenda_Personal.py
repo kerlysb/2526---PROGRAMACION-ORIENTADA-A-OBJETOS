@@ -33,14 +33,11 @@ class DatePicker(tk.Toplevel):
         # Inicia en 2026
         current_year = int(time.strftime("%Y"))
         self.year = str(max(current_year, 2026))
-        # ────────────────────────────────────────────────────────────────────
-
         self.month = 'Marzo'
         self.buttons = {}
 
-        # ── Configurar el calendario con semana comenzando en DOMINGO ───────
-        calendar.setfirstweekday(6)   # 6 = domingo
-        # ────────────────────────────────────────────────────────────────────
+        # Calendario inicia día domingo
+        calendar.setfirstweekday(6)
 
     def init_month_year_labels(self):
         self.year_str_var = tk.StringVar()
