@@ -199,7 +199,7 @@ class AgendaApp:
         self.entry_fecha.grid(row=0, column=1, padx=5, pady=8, sticky=tk.W)
         self.btn_fecha = tk.Button(self.frame_entrada, text="📅 Seleccionar",
                                    command=lambda: DatePicker(self.entry_fecha),
-                                   bg="#E6E6FA", activebackground="#FFF9E6", activeforeground="#4B0082",
+                                   bg="#FFD600", activebackground="#FFF9E6", activeforeground="#4B0082",
                                    relief="raised", borderwidth=4, font=('Arial', 10, 'bold'))
         self.btn_fecha.grid(row=0, column=2, padx=5)
 
