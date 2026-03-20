@@ -227,7 +227,7 @@ class AgendaApp:
         self.btn_eliminar.pack(side=tk.LEFT, padx=(0, 15))
 
         self.btn_salir = tk.Button(frame_botones, text="❌ Salir", command=root.quit,
-                                   bg="#2ECC71", activebackground="#BA55D3", activeforeground="white",
+                                   bg="#2ECC71", activebackground="#8FE6A7", activeforeground="white",
                                    relief="raised", borderwidth=5, font=('Arial', 11, 'bold'))
         self.btn_salir.pack(side=tk.RIGHT)
 
