@@ -78,9 +78,9 @@ class DatePicker(tk.Toplevel):
         self.right_yr.grid(row=1, column=2, padx=4, pady=(2, 5))
 
     def space_between_widgets(self):
-        pass  # ya no se necesita separador de columna
+        pass
 
-    # ── Navegación de año con límites 2026-2036 ──────────────────────────────
+    # Navegación de año con límites 2026-2036
     def prev_year(self):
         year = int(self.year_str_var.get()) - 1
         if year < 2026:
@@ -103,7 +103,7 @@ class DatePicker(tk.Toplevel):
         """Deshabilita los botones al alcanzar los límites del rango."""
         self.left_yr.config(state=tk.DISABLED if year <= 2026 else tk.NORMAL)
         self.right_yr.config(state=tk.DISABLED if year >= 2036 else tk.NORMAL)
-    # ─────────────────────────────────────────────────────────────────────────
+
 
     def prev_month(self):
         index = self.month_names.index(self.month_str_var.get())
