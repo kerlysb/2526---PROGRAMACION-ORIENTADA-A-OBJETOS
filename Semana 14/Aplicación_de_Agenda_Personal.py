@@ -135,7 +135,6 @@ class DatePicker(tk.Toplevel):
         year = int(self.year_str_var.get())
         month = self.month_names.index(self.month_str_var.get())
 
-        # calendar.monthcalendar ahora respeta firstweekday=6 (domingo)
         self.m_cal = calendar.monthcalendar(year, month)
 
         for row_idx, week in enumerate(self.m_cal, 1):
