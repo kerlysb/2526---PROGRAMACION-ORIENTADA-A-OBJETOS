@@ -9,3 +9,10 @@ class AppListaTareas:
         self.root.title("Gestor de Lista de Tareas")
         self.root.geometry("500x400")
 
+        # Lista en memoria para almacenar las tareas (texto original y estado completado)
+        self.tareas = []
+
+        # Frame principal para organizar componentes verticalmente
+        main_frame = tk.Frame(root)
+        main_frame.pack(pady=20, padx=20, fill="both", expand=True)
+
