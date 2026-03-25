@@ -29,14 +29,25 @@ class AppListaTareas:
         button_frame.pack(pady=10)
 
         tk.Button(button_frame, text="Añadir Tarea", command=self.anadir_tarea,
-                  bg="#4CAF50", fg="white", font=("Arial", 10, "bold")).pack(side="left", padx=5)
+                  bg="#4CAF50", fg="white",
+                  activebackground="#9370DB", activeforeground="white",
+                  relief="raised", borderwidth=5,
+                  font=("Arial", 10, "bold")).pack(side="left", padx=5)
+
         tk.Button(button_frame, text="Marcar Completada", command=self.marcar_completada,
-                  bg="#2196F3", fg="white", font=("Arial", 10, "bold")).pack(side="left", padx=5)
+                  bg="#2196F3", fg="white",
+                  activebackground="#9370DB", activeforeground="white",
+                  relief="raised", borderwidth=5,
+                  font=("Arial", 10, "bold")).pack(side="left", padx=5)
+
         tk.Button(button_frame, text="Eliminar Tarea", command=self.eliminar_tarea,
-                  bg="#f44336", fg="white", font=("Arial", 10, "bold")).pack(side="left", padx=5)
+                  bg="#f44336", fg="white",
+                  activebackground="#9370DB", activeforeground="white",
+                  relief="raised", borderwidth=5,
+                  font=("Arial", 10, "bold")).pack(side="left", padx=5)
 
         # Listbox para mostrar tareas con scroll integrado
-        # height=15 para mostrar varias tareas, font grande para legibilidad
+
         list_frame = tk.Frame(main_frame)
         list_frame.pack(pady=10, fill="both", expand=True)
 
@@ -50,7 +61,7 @@ class AppListaTareas:
         # Evento opcional: Doble clic en Listbox para marcar como completada
         # Mejora la usabilidad sin necesidad de botón
         self.listbox.bind("<Double-1>", lambda event: self.marcar_completada())
-        # Explicación: <Double-1> es el evento estándar para doble clic izquierdo en Tkinter [web:49][web:44]
+        # Explicación: <Double-1> es el evento estándar para doble clic izquierdo en Tkinter
 
     def anadir_tarea(self):
         """Añade la tarea del entry a la lista y actualiza visualmente."""
