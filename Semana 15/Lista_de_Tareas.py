@@ -85,7 +85,7 @@ class AppListaTareas:
             messagebox.showwarning("Advertencia", "Selecciona una tarea.")
 
     def eliminar_tarea(self):
-        """Elimina la tarea seleccionada con confirmación."""
+        """Elimina la tarea seleccionada con ."""
         seleccion = self.listbox.curselection()
         if seleccion:
             index = seleccion[0]
