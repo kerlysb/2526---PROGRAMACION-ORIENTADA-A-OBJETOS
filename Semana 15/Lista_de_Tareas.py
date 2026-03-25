@@ -85,7 +85,7 @@ class AppListaTareas:
             messagebox.showwarning("Advertencia", "Selecciona una tarea.")
 
     def eliminar_tarea(self):
-        """Elimina la tarea seleccionada con ."""
+        """Elimina la tarea seleccionada con confirmación."""
         seleccion = self.listbox.curselection()
         if seleccion:
             index = seleccion[0]
@@ -103,7 +103,6 @@ class AppListaTareas:
                 self.listbox.insert(END, f"✓ {texto}")  # Prefijo ✓ para completadas [web:42]
             else:
                 self.listbox.insert(END, f"○ {texto}")  # Prefijo ○ para pendientes
-        # Explicación: Actualización completa para evitar inconsistencias en la vista
 
 
 if __name__ == "__main__":
