@@ -6,7 +6,7 @@ class AppListaTareas:
     def __init__(self, root):
         # Inicialización de la ventana principal con título descriptivo
         self.root = root
-        self.root.title("Gestor de Lista de Tareas")
+        self.root.title("Mi Lista de Tareas")
         self.root.geometry("500x400")
 
         # Lista en memoria para almacenar las tareas (texto original y estado completado)
