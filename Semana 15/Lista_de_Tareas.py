@@ -74,7 +74,7 @@ class AppListaTareas:
             messagebox.showwarning("Advertencia", "Escribe una tarea válida.")
 
     def marcar_completada(self):
-        """Marca la tarea seleccionada como completada (cambia visualmente con )."""
+        """Marca la tarea seleccionada como completada (cambia visualmente con visto)."""
         seleccion = self.listbox.curselection()
         if seleccion:
             index = seleccion[0]
