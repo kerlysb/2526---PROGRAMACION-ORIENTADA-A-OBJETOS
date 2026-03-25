@@ -58,8 +58,7 @@ class AppListaTareas:
         self.listbox.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
 
-        # Evento opcional: Doble clic en Listbox para marcar como completada
-        # Mejora la usabilidad sin necesidad de botón
+        # Evento de doble clic en Listbox para marcar como completada
         self.listbox.bind("<Double-1>", lambda event: self.marcar_completada())
         # Explicación: <Double-1> es el evento estándar para doble clic izquierdo en Tkinter
 
