@@ -60,7 +60,7 @@ class AppListaTareas:
 
         # Evento de doble clic en Listbox para marcar como completada
         self.listbox.bind("<Double-1>", lambda event: self.marcar_completada())
-        # Explicación: <Double-1> es el evento estándar para doble clic izquierdo en Tkinter
+        # <Double-1> es el evento estándar para doble clic izquierdo en Tkinter
 
     def anadir_tarea(self):
         """Añade la tarea del entry a la lista y actualiza visualmente."""
@@ -74,7 +74,7 @@ class AppListaTareas:
             messagebox.showwarning("Advertencia", "Escribe una tarea válida.")
 
     def marcar_completada(self):
-        """Marca la tarea seleccionada como completada (cambia visualmente con ✓)."""
+        """Marca la tarea seleccionada como completada (cambia visualmente con )."""
         seleccion = self.listbox.curselection()
         if seleccion:
             index = seleccion[0]
