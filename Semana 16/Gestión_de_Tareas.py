@@ -36,7 +36,7 @@ class AppGestionTareas:
                   relief="raised", borderwidth=5, font=("Arial", 10, "bold")).pack(side="left", padx=5)
         tk.Button(button_frame, text="Eliminar Tarea", command=self.eliminar_tarea,
                   bg="#f44336", fg="white", activebackground="#9370DB", activeforeground="white",
-                  relief="raised", borderwidth=5, font=("Arial", 10, "bold")).pack(side="left", padx=5)  # Estilos mejorados [cite:2][web:6][web:11]
+                  relief="raised", borderwidth=5, font=("Arial", 10, "bold")).pack(side="left", padx=5)
 
         # Listbox para mostrar tareas
         list_frame = tk.Frame(main_frame)
