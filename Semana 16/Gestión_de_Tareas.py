@@ -56,7 +56,7 @@ class AppGestionTareas:
         self.listbox.bind('<<ListboxSelect>>', self.on_select)  # Actualiza selección
 
         # Mensaje inicial
-        self.listbox.insert(END, "¡Añade tareas con Enter o botón! Usa C/Delete para manejar.")
+        self.listbox.insert(END, "Añade tareas con enter, c para completar y d para eliminar")
 
     def anadir_tarea(self):
         texto = self.entry.get().strip()
