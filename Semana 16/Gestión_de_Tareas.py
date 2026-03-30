@@ -49,7 +49,7 @@ class AppGestionTareas:
         self.listbox.pack(side="left", expand=True, fill='both')
         scrollbar.pack(side="right", fill="y")
 
-        # Bind atajos globales
+        # Bind para atajos
         self.root.bind('c', lambda e: self.marcar_completada())  # C para completar (ignore case)
         self.root.bind('<Delete>', lambda e: self.eliminar_tarea())  # Delete para eliminar [web:3]
         self.root.bind('d', lambda e: self.eliminar_tarea())  # D para eliminar
