@@ -22,7 +22,7 @@ class AppGestionTareas:
         tk.Label(entry_frame, text="Nueva tarea:", font=("Arial", 12)).pack(side='left')
         self.entry = tk.Entry(entry_frame, font=("Arial", 12), width=30)
         self.entry.pack(side='left', padx=10)
-        self.entry.bind('<Return>', lambda e: self.anadir_tarea())  # Enter para añadir [web:3][web:8]
+        self.entry.bind('<Return>', lambda e: self.anadir_tarea())  # Enter para añadir
         self.entry.focus()
 
         # Frame de botones con colores llamativos y alto relieve
