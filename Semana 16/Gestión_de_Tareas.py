@@ -25,7 +25,7 @@ class AppGestionTareas:
         self.entry.bind('<Return>', lambda e: self.anadir_tarea())  # Enter para añadir
         self.entry.focus()
 
-        # Frame de botones con colores llamativos y alto relieve
+        # Frame de botones
         button_frame = tk.Frame(main_frame)
         button_frame.pack(pady=10)
         tk.Button(button_frame, text="Añadir Tarea", command=self.anadir_tarea,
