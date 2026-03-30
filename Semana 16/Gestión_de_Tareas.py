@@ -7,7 +7,7 @@ class AppGestionTareas:
         self.root = root
         self.root.title("Gestor de Tareas - Kerly Suarez")
         self.root.geometry("550x450")
-        self.root.bind('<Escape>', lambda e: self.root.quit())  # Atajo Escape para cerrar [web:3]
+        self.root.bind('<Escape>', lambda e: self.root.quit())  # Atajo Escape para cerrar
 
         # Lista de tareas: cada una es un dict {'texto': str, 'completada': bool}
         self.tareas = []
