@@ -51,7 +51,7 @@ class AppGestionTareas:
 
         # Bind para atajos
         self.root.bind('c', lambda e: self.marcar_completada())  # C para completar (ignore case)
-        self.root.bind('<Delete>', lambda e: self.eliminar_tarea())  # Delete para eliminar [web:3]
+        self.root.bind('<Delete>', lambda e: self.eliminar_tarea())  # Delete para eliminar
         self.root.bind('d', lambda e: self.eliminar_tarea())  # D para eliminar
         self.listbox.bind('<<ListboxSelect>>', self.on_select)  # Actualiza selección
 
