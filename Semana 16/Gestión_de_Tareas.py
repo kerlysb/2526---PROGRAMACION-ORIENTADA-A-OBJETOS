@@ -5,7 +5,7 @@ class AppGestionTareas:
     def __init__(self, root):
         # Configuración ventana principal
         self.root = root
-        self.root.title("Gestor de Tareas - Kerly Suarez")
+        self.root.title("Mi Gestor de Tareas")
         self.root.geometry("550x450")
         self.root.bind('<Escape>', lambda e: self.root.quit())  # Atajo Escape para cerrar
 
