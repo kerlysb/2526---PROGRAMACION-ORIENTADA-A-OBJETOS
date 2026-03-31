@@ -9,7 +9,7 @@ class AppGestionTareas:
         self.root.geometry("550x450")
         self.root.bind('<Escape>', lambda e: self.root.quit())  # Atajo Escape para cerrar
 
-        # Lista de tareas: cada una es un dict {'texto': str, 'completada': bool}
+        # Lista de tareas: cada una es un dict
         self.tareas = []
 
         # Frame principal
@@ -42,7 +42,7 @@ class AppGestionTareas:
         list_frame = tk.Frame(main_frame)
         list_frame.pack(expand=True, fill='both', pady=10)
         tk.Label(list_frame, text="Lista de Tareas:", font=("Arial", 12, "bold")).pack(anchor='w')
-        self.listbox = Listbox(list_frame, font=("Arial", 11), selectmode=SINGLE, height=15)  # SINGLE para selección única [web:4][web:9]
+        self.listbox = Listbox(list_frame, font=("Arial", 11), selectmode=SINGLE, height=15)  # SINGLE para selección única
         scrollbar = tk.Scrollbar(list_frame, orient="vertical")
         self.listbox.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=self.listbox.yview)
